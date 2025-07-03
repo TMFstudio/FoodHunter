@@ -9,7 +9,7 @@ namespace FoodHunter.Pages.Categories
 {
     public class IndexModel : PageModel
     {
-        public ApplicationDbContext _dbContext { get; set; }
+        private readonly ApplicationDbContext _dbContext;
         public IEnumerable<CategoryViewModel> categories { get; set; }
         public IndexModel(ApplicationDbContext dbContext)
         {

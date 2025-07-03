@@ -1,28 +1,33 @@
 using Core.Models;
 using Data;
+using FoodHunter.Mapper;
 using FoodHunter.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FoodHunter.Pages.Categories
 {
+
+    [BindProperties]
     public class CreateModel : PageModel
     {
-        public ApplicationDbContext _dbContext { get; set; }
+        private readonly ApplicationDbContext _dbContext;
         public CategoryViewModel category { get; set; }
         public CreateModel(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
-        public async Task OnGet()
+        public void OnGet()
         {
-            category = new CategoryViewModel();
+            //category = new Category();
         }
-        public async Task<IActionResult> OnPost(CategoryViewModel model)
+        public async Task<IActionResult> OnPost()
         {
             if (ModelState.IsValid)
             {
-                //Add
+                var entity=category.ToEntity();
+                await _dbContext.AddAsync(entity);
+                await _dbContext.SaveChangesAsync();
                 return RedirectToPage("Index");
             }
             return Page();

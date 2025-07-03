@@ -5,7 +5,7 @@
 <div class="container p-3">
     <div class="row pt-4">
         <div class="col-6">
-            <h2> Category List</h2>
+            <h2 class="text-dark"> Category List</h2>
         </div>
     </div>
     <div class="col-6">
@@ -15,7 +15,8 @@
     </div>
 </div>
 <br /><br />
-<table>
+<table class="table table-bordered table-striped"style="width:100%">
+
     <thead>
     <tr>
         <th>
@@ -30,12 +31,12 @@
     @foreach(var item in Model.categories)
         {
             <tr>
-                <th>
+                <td width="50%">
                     @item.Name
-                </th>
-                <th>
+                </td>
+                <td width="30%">
                     @item.DisplayOrder
-                </th>
+                </td>
             </tr>
         }
 

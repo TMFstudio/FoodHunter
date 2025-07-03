@@ -5,6 +5,7 @@ namespace FoodHunter.Mapper
 {
     public static class Mapper
     {
+        #region Category
         public static CategoryViewModel ToViewModel(this Category category)
         {
             return new CategoryViewModel
@@ -20,5 +21,16 @@ namespace FoodHunter.Mapper
         {
            return category.Select(x=>x.ToViewModel()).ToList();
         }
+        public static Category ToEntity(this CategoryViewModel category)
+        {
+            return new Category
+            {
+                Id = category.Id,
+                Name = category.Name,
+                Description = category.Description,
+                DisplayOrder = category.DisplayOrder
+            };
+        }
+        #endregion
     }
 }

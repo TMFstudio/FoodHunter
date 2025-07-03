@@ -1,4 +1,6 @@
-﻿namespace FoodHunter.ViewModel
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace FoodHunter.ViewModel
 {
     public class BaseViewModel
     {
