@@ -2,7 +2,7 @@
 
 A modern, responsive web application built with **ASP.NET Core Razor Pages** for managing food categories and recipes. Designed with scalability, maintainability, and clean architecture in mind.
 
-![.NET Core](https://img.shields.io/badge/.NET-7.0-blueviolet)
+![.NET Core](https://img.shields.io/badge/.NET-8.0-blueviolet)
 ![Razor Pages](https://img.shields.io/badge/Razor%20Pages-ASP.NET%20Core-blue)
 ![License](https://img.shields.io/github/license/yourusername/FoodHunter)
 
