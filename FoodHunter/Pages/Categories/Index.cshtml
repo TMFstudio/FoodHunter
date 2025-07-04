@@ -25,17 +25,28 @@
         <th>
             Display Order
         </th>
+        <th>
+
+        </th>
     </tr>
     </thead>
 <tbody>
     @foreach(var item in Model.categories)
         {
             <tr>
-                <td width="50%">
+                <td width="60%">
                     @item.Name
                 </td>
-                <td width="30%">
+                <td width="25%">
                     @item.DisplayOrder
+                </td>      
+                <td width="15%">
+                    <a asp-page="Update"Asp-route-id="@item.Id" class="btn btn-primary mx-2">
+                       <i class="bi bi-pencil-square"></i>
+                    </a>
+                    <a asp-page="delete" Asp-route-id="@item.Id" class="btn btn-danger mx-2">
+                       <i class="bi bi-trash-fill"></i>
+                    </a>
                 </td>
             </tr>
         }

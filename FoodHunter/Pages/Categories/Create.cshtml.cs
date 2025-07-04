@@ -19,7 +19,7 @@ namespace FoodHunter.Pages.Categories
         }
         public void OnGet()
         {
-            //category = new Category();
+          
         }
         public async Task<IActionResult> OnPost()
         {

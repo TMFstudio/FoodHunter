@@ -9,8 +9,9 @@
             <h2 class="text-primary pl-3"> Create category</h2>
             <hr />
         </div>
+        <div asp-validation-summary="All"> </div>
         <div class="mb-3">
-             @if (!Model.ModelState.IsValid)
+             @if (!Model.ModelState.IsValid && Model.category.Name!=null)
             {
                 <div class="has-danger">
                     <label asp-for="category.Name" class="form-label mt-4" for="inputInvalid">Invalid input</label>
@@ -21,13 +22,12 @@
             else
             {
                 <label asp-for="category.Name"></label>
-                <input asp-for="category.Name" class="form-control" />
-                <span asp-validation-for="category.Name" class="text-danger"></span>
+                <input asp-for="category.Name" type="text" name="Name" class="form-control" />
             }
         </div>
         <div class="mb-3">
             
-            @if (!Model.ModelState.IsValid)
+            @if (!Model.ModelState.IsValid && Model.category.Description != null)
             {
                 <div class="has-danger">
                     <label asp-for="category.Description" class="form-label mt-4" for="inputInvalid">Invalid input</label>
@@ -43,7 +43,7 @@
            
         </div>
         <div class="mb-3">
-                        @if (!Model.ModelState.IsValid)
+            @if (!Model.ModelState.IsValid && Model.category.DisplayOrder != 0)
             {
                 <label asp-for="category.DisplayOrder" class="form-label mt-4" for="inputInvalid">Invalid input</label>
                 <input asp-for="category.DisplayOrder" type="text" name="DisplayOrder" class="form-control is-invalid" id="inputInvalid" />
