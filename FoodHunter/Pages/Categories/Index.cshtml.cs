@@ -15,9 +15,20 @@ namespace FoodHunter.Pages.Categories
         {
             _dbContext = dbContext;
         }
-        public void OnGet()
+        public async Task OnGet()
         {
             categories = _dbContext.Category.ToViewModelList();
+        }
+        public async Task<IActionResult> OnPostAsync(int id)
+        {
+            if (id != 0)
+            {
+                var entity = await _dbContext.Category.FindAsync(id);
+                _dbContext.Category.Remove(entity);
+                await _dbContext.SaveChangesAsync();
+                return RedirectToPage();
+            }
+            return RedirectToPage();
         }
     }
 }

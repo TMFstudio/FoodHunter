@@ -8,10 +8,10 @@ namespace FoodHunter.ViewModel
     public partial class CategoryViewModel : BaseViewModel
     {
         [BindProperty]
-        [Required(ErrorMessage = "validation message")]
+        [Required(ErrorMessage = "the name should not be empty")]
         public string Name { get; set; }
         [BindProperty]
-        [Required(ErrorMessage = "validation message")]
+        [Required(ErrorMessage = "the Description should not be empty")]
         public string Description { get; set; }
         [BindProperty]
 

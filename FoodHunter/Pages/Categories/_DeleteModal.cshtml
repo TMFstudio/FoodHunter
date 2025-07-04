@@ -1,18 +1,22 @@
-﻿@page
-@model FoodHunter.Pages.Categories.DeleteModel
-@{
-}
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+﻿@using FoodHunter.ViewModel
+@model CategoryViewModel
+
+<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-@Model.Id">
+    <i class="bi bi-trash-fill"> </i>
+</button>
+
+<div class="modal fade" id="deleteModal-@Model.Id" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="post" asp-page-handler="Delete">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                    <h5 class="modal-title" id="deleteModalLabel-@Model.Id">Confirm Deletion</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Are you sure you want to delete <strong id="itemName"></strong>?
-                    <input type="hidden" name="Id" id="Id" />
+                    <p>Are you sure you want to delete <strong>@Model.Name</strong>?</p>
+                    <p class="text-muted">@Model.Description</p>
+                    <input type="hidden" name="Id" value="@Model.Id">>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

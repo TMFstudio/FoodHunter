@@ -27,7 +27,7 @@ namespace FoodHunter.Pages.Categories
             }
             return RedirectToPage("Categories/Index");
         }
-        public async Task<IActionResult> OnPost(CategoryViewModel model)
+        public async Task<IActionResult> OnPost()
         {
             if (ModelState.IsValid)
             {

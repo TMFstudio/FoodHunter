@@ -29,14 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Pages\Categories\Delete.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Pages\Categories\Delete.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="Pages\Categories\Delete.cshtml" />
   </ItemGroup>
 
