@@ -3,9 +3,8 @@ using FoodHunter.Mapper;
 using FoodHunter.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
-namespace FoodHunter.Pages.Categories
+namespace FoodHunter.Admin.Categories
 {
     [BindProperties]
     public class UpdateModel : PageModel
@@ -19,9 +18,9 @@ namespace FoodHunter.Pages.Categories
         }
         public async Task<IActionResult> OnGet(int id)
         {
-            if (id != 0 && id != null)
+            if (id != 0)
             {
-                var entity = await _dbContext.Category.FindAsync(id);
+                var entity = await _dbContext.Categories.FindAsync(id);
                 category = entity.ToViewModel();
                 return Page();
             }

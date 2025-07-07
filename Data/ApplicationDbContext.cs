@@ -10,6 +10,9 @@ namespace Data
         {
             
         }
-        public DbSet<Category> Category {  get; set; }
+        public DbSet<Category> Categories {  get; set; }
+        public DbSet<Product> Products {  get; set; }
+        public DbSet<ProductsCategory> ProductsCategories {  get; set; }
+        public DbSet<ProductType> ProductTypes {  get; set; }
     }
 }

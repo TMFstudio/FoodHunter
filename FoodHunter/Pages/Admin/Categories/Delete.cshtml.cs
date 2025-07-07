@@ -1,10 +1,9 @@
 using Data;
-using FoodHunter.Mapper;
 using FoodHunter.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace FoodHunter.Pages.Categories
+namespace FoodHunter.Admin.Categories
 {
     public class DeleteModel : PageModel
     {
@@ -19,8 +18,8 @@ namespace FoodHunter.Pages.Categories
         {
             if (id != 0)
             {
-                var entity = await _dbContext.Category.FindAsync(id);
-                _dbContext.Category.Remove(entity);
+                var entity = await _dbContext.Categories.FindAsync(id);
+                _dbContext.Categories.Remove(entity);
                 await _dbContext.SaveChangesAsync();
                 return Page();
             }

@@ -1,11 +1,10 @@
 using Data;
-using Core.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using FoodHunter.ViewModel;
 using FoodHunter.Mapper;
 
-namespace FoodHunter.Pages.Categories
+namespace FoodHunter.Admin.Categories
 {
     public class IndexModel : PageModel
     {
@@ -17,14 +16,14 @@ namespace FoodHunter.Pages.Categories
         }
         public async Task OnGet()
         {
-            categories = _dbContext.Category.ToViewModelList();
+            categories = _dbContext.Categories.ToViewModelList();
         }
         public async Task<IActionResult> OnPostAsync(int id)
         {
             if (id != 0)
             {
-                var entity = await _dbContext.Category.FindAsync(id);
-                _dbContext.Category.Remove(entity);
+                var entity = await _dbContext.Categories.FindAsync(id);
+                _dbContext.Categories.Remove(entity);
                 await _dbContext.SaveChangesAsync();
                 return RedirectToPage();
             }

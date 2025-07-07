@@ -5,7 +5,7 @@ using FoodHunter.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace FoodHunter.Pages.Categories
+namespace FoodHunter.Admin.Categories
 {
 
     [BindProperties]
@@ -28,7 +28,7 @@ namespace FoodHunter.Pages.Categories
                 var entity=category.ToEntity();
                 await _dbContext.AddAsync(entity);
                 await _dbContext.SaveChangesAsync();
-                return RedirectToPage("Index");
+                return RedirectToPage("Admin/Index");
             }
             return Page();
         }
