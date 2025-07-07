@@ -7,24 +7,38 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Core.Models;
 using Data;
+using FoodHunter.ViewModel;
+using FoodHunter.Mapper;
 
 namespace FoodHunter.Pages.Admin.Products
 {
     public class IndexModel : PageModel
     {
-        private readonly Data.ApplicationDbContext _context;
+        private readonly ApplicationDbContext _dbContext;
+        public IEnumerable<ProductViewModel> Products { get; set; }
 
         public IndexModel(Data.ApplicationDbContext context)
         {
-            _context = context;
+            _dbContext = context;
         }
-
-        public IList<Product> Product { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            Product = await _context.Products
-                .Include(p => p.ProductType).ToListAsync();
+            //prepare
+            Products = _dbContext.Products.ToViewModelList();
+            
+
+        }
+        public async Task<IActionResult> OnPostAsync(int id)
+        {
+            if (id != 0)
+            {
+                var entity = await _dbContext.Products.FindAsync(id);
+                _dbContext.Products.Remove(entity);
+                await _dbContext.SaveChangesAsync();
+                return RedirectToPage();
+            }
+            return RedirectToPage();
         }
     }
 }

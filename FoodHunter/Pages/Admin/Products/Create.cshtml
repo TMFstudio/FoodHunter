@@ -6,52 +6,52 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
-
-<h4>Product</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Product.ProductTypeId" class="control-label"></label>
-                <select asp-for="Product.ProductTypeId" class ="form-control" asp-items="ViewBag.ProductTypeId"></select>
-            </div>
-            <div class="form-group">
-                <span class="text-danger">*</span>
-                <label asp-for="Product.Name" class="control-label"></label>
-                <input asp-for="Product.Name" class="form-control" />
-                <span asp-validation-for="Product.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <span class="text-danger">*</span>
-                <label asp-for="Product.Description" class="control-label"></label>
-                <input asp-for="Product.Description" class="form-control" />
-                <span asp-validation-for="Product.Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <span class="text-danger">*</span>
-                <label asp-for="Product.CreateDate" class="control-label"></label>
-                <input asp-for="Product.CreateDate" class="form-control" />
-                <span asp-validation-for="Product.CreateDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Product.DisplayOrder" class="control-label"></label>
-                <input asp-for="Product.DisplayOrder" class="form-control" />
-                <span asp-validation-for="Product.DisplayOrder" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<form method="post">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary pl-3"> Create category</h2>
+            <hr />
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Product.ProductTypeId" class="control-label"></label>
+            <select asp-for="Product.ProductTypeId" class="form-control" asp-items="ViewBag.ProductTypeId"></select>
+        </div>
+        <div class="form-group">
+            <span class="text-danger">*</span>
+            <label asp-for="Product.Name" class="control-label"></label>
+            <input asp-for="Product.Name" class="form-control" />
+            <span asp-validation-for="Product.Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <span class="text-danger">*</span>
+            <label asp-for="Product.Description" class="control-label"></label>
+            <input asp-for="Product.Description" class="form-control" />
+            <span asp-validation-for="Product.Description" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <span class="text-danger">*</span>
+            <label asp-for="Product.CreateDate" class="control-label"></label>
+            <input asp-for="Product.CreateDate" class="form-control" />
+            <span asp-validation-for="Product.CreateDate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Product.DisplayOrder" class="control-label"></label>
+            <input asp-for="Product.DisplayOrder" class="form-control" />
+            <span asp-validation-for="Product.DisplayOrder" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
     </div>
-</div>
+</form>
 
 <div>
     <a asp-page="Index">Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

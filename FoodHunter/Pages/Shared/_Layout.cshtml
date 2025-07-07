@@ -11,27 +11,33 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark" data-bs-theme="dark">
+        <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-page="/Index">FoodHunter</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" href="/Index">Navbar</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarColor02">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link active" asp-page="Aboutus">Aboutus</a>
+                            <a class="nav-link active" href="/index">
+                                Profile
+                                <span class="visually-hidden">(current)</span>
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" asp-page="Privacy">Privacy</a>
+                            <a class="nav-link" asp-page="Aboutus">Aboutus</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle show" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">Dropdown</a>
-                            <div class="dropdown-menu show" data-bs-popper="static">
-                                <a class="nav-link active" asp-page="Admin/Categories/Index">Categories</a>
-                                <a class="nav-link active" asp-page="Admin/Products/index">Products</a>
-                                <a class="nav-link active" asp-page="Admin/ProductsType/Index">ProductsType</a>
-                                <a class="nav-link active" asp-page="Admin/ProductsCategories/Index">ProductsCategories</a>
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" asp-page="/Admin/Categories/Index">Categories</a>
+                                <a class="dropdown-item" asp-page="/Admin/Products/Index">Products</a>
+                                <a class="dropdown-item" asp-page="/Admin/ProductsType/Index">ProductsType</a>
+                                <a class="dropdown-item" asp-page="/Admin/ProductsCategories/Index">ProductsCategories</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Separated link</a>
                             </div>

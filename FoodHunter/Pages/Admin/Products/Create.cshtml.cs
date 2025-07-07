@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Core.Models;
 using Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace FoodHunter.Pages.Admin.Products
 {
@@ -21,7 +22,7 @@ namespace FoodHunter.Pages.Admin.Products
 
         public IActionResult OnGet()
         {
-        ViewData["ProductTypeId"] = new SelectList(_context.ProductTypes, "Id", "Name");
+            ViewData["ProductTypeId"] = new SelectList(_context.ProductTypes, "Id", "Name");
             return Page();
         }
 
