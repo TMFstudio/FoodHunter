@@ -1,5 +1,8 @@
 using Data;
+using Data.Repository;
 using Microsoft.EntityFrameworkCore;
+using Service.Repository.Interfaces;
+using Service.Repository.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
 builder.Services.AddDbContext<ApplicationDbContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

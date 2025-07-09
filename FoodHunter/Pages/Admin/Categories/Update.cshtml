@@ -57,3 +57,8 @@
         <button type="submit" class="btn btn-primary" style="width:150px;">Update</button>
     </div>
 </form>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
