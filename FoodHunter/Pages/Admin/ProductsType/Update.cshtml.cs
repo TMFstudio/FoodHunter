@@ -1,23 +1,29 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Core.Models;
+using Service.Interfaces;
 using FoodHunter.Mapper;
 using FoodHunter.ViewModel;
-using Service.Interfaces;
 
-namespace FoodHunter.Pages.Admin.Products
+namespace FoodHunter.Pages.Admin.ProductsType
 {
     [BindProperties]
     public class UpdateModel : PageModel
     {
-        private readonly IProductService _productService;
-        public UpdateModel(IProductService productService)
-        {
-            _productService = productService;
-        }
-        public ProductViewModel Product { get; set; } = default!;
+        private readonly IProductTypeService  _productTypeService;
+        public ProductTypeViewModel ProductType { get; set; } = default!;
 
+
+        public UpdateModel(IProductTypeService productTypeService)
+        {
+            _productTypeService = productTypeService;
+        }
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -25,15 +31,16 @@ namespace FoodHunter.Pages.Admin.Products
                 return NotFound();
             }
 
-            var product = await _productService.GetProductByIdAsync(id.Value);
+            var product = await _productTypeService.GetProductTypeByIdAsync(id.Value);
             if (product == null)
             {
                 return NotFound();
             }
-            Product = product.ToViewModel();
+            ProductType = product.ToViewModel();
             //ViewData["ProductTypeId"] = new SelectList(_productService.ProductTypes, "Id", "Name");
             return Page();
         }
+
 
         public async Task<IActionResult> OnPostAsync(int id)
         {
@@ -43,13 +50,13 @@ namespace FoodHunter.Pages.Admin.Products
             }
             try
             {
-                var entity = Product.ToEntity();
+                var entity = ProductType.ToEntity();
 
-                await _productService.UpdateProductAsync(entity);
+                await _productTypeService.UpdateProductTypeAsync(entity);
             }
             catch (DbUpdateConcurrencyException)
             {
-                    return NotFound();
+                return NotFound();
             }
 
             return RedirectToPage("./Index");

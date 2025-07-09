@@ -1,7 +1,7 @@
 ﻿using Core.Models;
 
 
-namespace Service.Repository.Interfaces
+namespace Service.Interfaces
 {
     public interface IProductService
     {

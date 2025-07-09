@@ -15,23 +15,35 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ProductType[0].Name)
+                Id
             </th>
-            <th></th>
+            <th>
+                Product Name
+            </th>
+            <th>
+
+            </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.ProductType) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.ProductTypes)
+        {
+            <tr>
+                <td width="10%">
+                    @item.Id
+                </td>
+                <td width="70%">
+                    @item.Name
+
+                </td>
+                <td width="15%">
+                    <a asp-page="Update" Asp-route-id="@item.Id" class="btn btn-primary mx-2">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                    <partial name="_DeleteModal" model="item" />
+
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

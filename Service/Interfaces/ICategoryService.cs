@@ -1,13 +1,12 @@
 ﻿
 using Core.Models;
-using Data.Repository;
-using Service.Repository.Services;
 
-namespace Service.Repository.Interfaces
+
+namespace Service.Interfaces
 {
-    public interface ICategoryService 
+    public interface ICategoryService
     {
-        Task<IEnumerable<Category>> GetCategoriesAsync();   
+        Task<IEnumerable<Category>> GetCategoriesAsync();
         Task<Category> GetCategoryByIdAsync(int id);
         Task DeleteCategoryByIdAsync(int id);
         Task InsertCategoryAsync(Category category);

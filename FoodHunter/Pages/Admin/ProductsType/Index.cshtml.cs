@@ -1,29 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using Core.Models;
-using Data;
+using Service.Interfaces;
+using FoodHunter.ViewModel;
+using FoodHunter.Mapper;
 
 namespace FoodHunter.Pages.Admin.ProductsType
 {
     public class IndexModel : PageModel
     {
-        private readonly Data.ApplicationDbContext _context;
+        private readonly IProductTypeService _productTypeService;
+        public IList<ProductTypeViewModel> ProductTypes { get; set; } = default!;
 
-        public IndexModel(Data.ApplicationDbContext context)
+        public IndexModel(IProductTypeService  productTypeService)
         {
-            _context = context;
+            _productTypeService = productTypeService;
         }
-
-        public IList<ProductType> ProductType { get;set; } = default!;
-
         public async Task OnGetAsync()
         {
-            ProductType = await _context.ProductTypes.ToListAsync();
+            //prepare
+            var entity = await _productTypeService.GetAllProductTypesAsync();
+            ProductTypes = entity.ToViewModelList();
+
+        }
+        public async Task<IActionResult> OnPostAsync(int id)
+        {
+            if (id != 0)
+            {
+                await _productTypeService.DeleteProductTypeByIdAsync(id);
+                return RedirectToPage();
+            }
+            return RedirectToPage();
+        }
+
         }
     }
-}

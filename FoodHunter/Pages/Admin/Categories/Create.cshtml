@@ -6,53 +6,53 @@
 <form method="post">
     <div class="border p-3 mt-4">
         <div class="row pb-2">
-            <h2 class="text-primary pl-3"> Create category</h2>
+            <h2 class="text-primary pl-3"> Create Category</h2>
             <hr />
         </div>
         <div asp-validation-summary="All"> </div>
         <div class="mb-3">
-             @if (!Model.ModelState.IsValid && Model.category.Name==null)
+             @if (!Model.ModelState.IsValid && Model.Category.Name==null)
             {
                 <div class="has-danger">
-                    <label asp-for="category.Name" class="form-label mt-4" for="inputInvalid"></label>
-                    <input asp-for="category.Name" type="text" name="Name" class="form-control is-invalid" id="inputInvalid" />
-                    <span asp-validation-for="category.Name" class="text-danger"></span>
+                    <label asp-for="Category.Name" class="form-label mt-4" for="inputInvalid"></label>
+                    <input asp-for="Category.Name" type="text" name="Name" class="form-control is-invalid" id="inputInvalid" />
+                    <span asp-validation-for="Category.Name" class="text-danger"></span>
                 </div>
             }
             else
             {
-                <label asp-for="category.Name"></label>
-                <input asp-for="category.Name" type="text" name="Name" class="form-control" />
+                <label asp-for="Category.Name"></label>
+                <input asp-for="Category.Name" type="text" name="Name" class="form-control" />
             }
         </div>
         <div class="mb-3">
             
-            @if (!Model.ModelState.IsValid && Model.category.Description == null)
+            @if (!Model.ModelState.IsValid && Model.Category.Description == null)
             {
                 <div class="has-danger">
-                    <label asp-for="category.Description" class="form-label mt-4" for="inputInvalid"></label>
-                    <input asp-for="category.Description" type="text" name="Description" class="form-control is-invalid" id="inputInvalid" />
-                    <span asp-validation-for="category.Description" class="text-danger"></span>
+                    <label asp-for="Category.Description" class="form-label mt-4" for="inputInvalid"></label>
+                    <input asp-for="Category.Description" type="text" name="Description" class="form-control is-invalid" id="inputInvalid" />
+                    <span asp-validation-for="Category.Description" class="text-danger"></span>
                 </div>
             }
             else
             {
-                <label asp-for="category.Description"></label>
-                <input asp-for="category.Description" type="text" name="Description" class="form-control" />
+                <label asp-for="Category.Description"></label>
+                <input asp-for="Category.Description" type="text" name="Description" class="form-control" />
             }
            
         </div>
         <div class="mb-3">
-            @if (!Model.ModelState.IsValid && Model.category.DisplayOrder == 0)
+            @if (!Model.ModelState.IsValid && Model.Category.DisplayOrder == 0)
             {
-                <label asp-for="category.DisplayOrder" class="form-label mt-4" for="inputInvalid"></label>
-                <input asp-for="category.DisplayOrder" type="text" name="DisplayOrder" class="form-control is-invalid" id="inputInvalid" />
-                <span asp-validation-for="category.DisplayOrder" class="text-danger"></span>
+                <label asp-for="Category.DisplayOrder" class="form-label mt-4" for="inputInvalid"></label>
+                <input asp-for="Category.DisplayOrder" type="text" name="DisplayOrder" class="form-control is-invalid" id="inputInvalid" />
+                <span asp-validation-for="Category.DisplayOrder" class="text-danger"></span>
             }
             else
             {
-                <label asp-for="category.DisplayOrder"></label>
-                <input asp-for="category.DisplayOrder" type="text" name="DisplayOrder" class="form-control" />
+                <label asp-for="Category.DisplayOrder"></label>
+                <input asp-for="Category.DisplayOrder" type="text" name="DisplayOrder" class="form-control" />
             }
         </div>
         <button type="submit" class="btn btn-primary" style="width:150px;">Create</button>

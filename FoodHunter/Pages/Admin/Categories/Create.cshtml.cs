@@ -4,7 +4,7 @@ using FoodHunter.Mapper;
 using FoodHunter.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Service.Repository.Interfaces;
+using Service.Interfaces;
 
 namespace FoodHunter.Admin.Categories
 {
@@ -13,20 +13,19 @@ namespace FoodHunter.Admin.Categories
     public class CreateModel : PageModel
     {
         private readonly ICategoryService _categoryService;
-        public CategoryViewModel category { get; set; }
+        public CategoryViewModel Category { get; set; } = default!;
         public CreateModel(ICategoryService  categoryService)
         {
             _categoryService = categoryService;
         }
-        public void OnGet()
+        public async Task OnGet()
         {
-          
         }
         public async Task<IActionResult> OnPost()
         {
             if (ModelState.IsValid)
             {
-                var entity=category.ToEntity();
+                var entity=Category.ToEntity();
                 await _categoryService.InsertCategoryAsync(entity);
                 return RedirectToPage("Index");
             }

@@ -1,15 +1,15 @@
 ﻿using Core.Models;
 using Data.Repository;
-using Service.Repository.Interfaces;
+using Service.Interfaces;
 
-namespace Service.Repository.Services
+namespace Service.Services
 {
     public class CategoryService : ICategoryService
     {
         private readonly IRepository<Category> _categoryRepository;
         public CategoryService(IRepository<Category> categoryRepository)
         {
-            this._categoryRepository = categoryRepository;
+            _categoryRepository = categoryRepository;
         }
 
         public virtual async Task DeleteCategoryByIdAsync(int id)

@@ -1,10 +1,11 @@
+using Core.Models;
 using Data;
 using FoodHunter.Mapper;
 using FoodHunter.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Service.Repository.Interfaces;
+using Service.Interfaces;
 
 namespace FoodHunter.Admin.Categories
 {
@@ -12,20 +13,24 @@ namespace FoodHunter.Admin.Categories
     public class UpdateModel : PageModel
     {
         private readonly ICategoryService _categoryService;
-        public CategoryViewModel category { get; set; }
+        public CategoryViewModel category { get; set; } = default!;
 
         public UpdateModel(ICategoryService categoryService)
         {
             _categoryService = categoryService;
         }
-        public async Task<IActionResult> OnGet(int id)
+        public async Task<IActionResult> OnGet(int? id)
         {
-            if (id != 0)
+            if (id == null)
             {
-                var entity = await _categoryService.GetCategoryByIdAsync(id);
-                category = entity.ToViewModel();
-                return Page();
+                return NotFound();
             }
+            var product = await _categoryService.GetCategoryByIdAsync(id.Value);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            category = product.ToViewModel();
             return RedirectToPage("Index");
         }
         public async Task<IActionResult> OnPost()

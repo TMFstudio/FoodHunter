@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 namespace FoodHunter.ViewModel
 {
 
-    public partial class CategoryViewModel : BaseViewModel
+    public partial record CategoryViewModel : BaseViewModel
     {
         [BindProperty]
         [Required(ErrorMessage = "the name should not be empty")]

@@ -1,42 +1,40 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Core.Models;
+using Service.Interfaces;
+using FoodHunter.ViewModel;
+using FoodHunter.Mapper;
 
 
 namespace FoodHunter.Pages.Admin.Products
 {
+    [BindProperties]
     public class CreateModel : PageModel
     {
-        private readonly Data.ApplicationDbContext _context;
+        private readonly IProductService _productService;
+        public ProductViewModel Product { get; set; } = default!;
 
-        public CreateModel(Data.ApplicationDbContext context)
+        public CreateModel(IProductService productService)
         {
-            _context = context;
+            _productService = productService;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
-            ViewData["ProductTypeId"] = new SelectList(_context.ProductTypes, "Id", "Name");
+            //ViewData["ProductTypeId"] = new SelectList(_productService.ProductTypes, "Id", "Name");
             return Page();
         }
-
-        [BindProperty]
-        public Product Product { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return Page();
+                var entity = Product.ToEntity();
+                await _productService.InsertProductAsync(entity);
+                return RedirectToPage("Index");
             }
-
-            _context.Products.Add(Product);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
+            return Page();
         }
     }
 }

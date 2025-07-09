@@ -1,15 +1,15 @@
 ﻿using Core.Models;
 using Data.Repository;
-using Service.Repository.Interfaces;
+using Service.Interfaces;
 
-namespace Service.Repository.Services
+namespace Service.Services
 {
     public class ProductService : IProductService
     {
         private readonly IRepository<Product> _productRepository;
         public ProductService(IRepository<Product> productRepository)
         {
-            this._productRepository = productRepository;
+            _productRepository = productRepository;
         }
 
         public virtual async Task DeleteProductByIdAsync(int id)
@@ -24,7 +24,7 @@ namespace Service.Repository.Services
 
         public virtual async Task<IEnumerable<Product>> GetAllProductsAsync()
         {
-            return   await _productRepository.GetAllAsync();
+            return await _productRepository.GetAllAsync();
         }
 
         public virtual async Task<Product> GetProductByIdAsync(int id)
@@ -34,7 +34,7 @@ namespace Service.Repository.Services
 
         public virtual async Task InsertProductAsync(Product product)
         {
-             await _productRepository.InsertAsync(product);
+            await _productRepository.InsertAsync(product);
         }
 
         public virtual async Task UpdateProductAsync(Product product)

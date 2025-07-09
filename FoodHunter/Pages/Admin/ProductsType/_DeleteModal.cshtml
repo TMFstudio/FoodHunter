@@ -1,5 +1,5 @@
 ﻿@using FoodHunter.ViewModel
-@model ProductViewModel
+@model ProductTypeViewModel
 
 <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-@Model.Id">
     <i class="bi bi-trash-fill"> </i>
@@ -15,7 +15,6 @@
                 </div>
                 <div class="modal-body">
                     <p>Are you sure you want to delete <strong>@Model.Name</strong>?</p>
-                    <p class="text-muted">@Model.Description</p>
                     <input type="hidden" name="Id" value="@Model.Id">>
                 </div>
                 <div class="modal-footer">

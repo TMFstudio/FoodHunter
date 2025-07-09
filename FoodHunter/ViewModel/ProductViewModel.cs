@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FoodHunter.ViewModel
 {
-    public class ProductViewModel : BaseViewModel
+    public record ProductViewModel : BaseViewModel
     {
         public ProductViewModel()
         {

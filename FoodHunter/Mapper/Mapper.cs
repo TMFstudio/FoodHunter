@@ -35,35 +35,60 @@ namespace FoodHunter.Mapper
 
         #region Product
 
-        public static ProductViewModel ToViewModel(this Product category)
+        public static ProductViewModel ToViewModel(this Product  product)
         {
             return new ProductViewModel
             {
-                Id = category.Id,
-                Name = category.Name,
-                Description = category.Description,
-                ProductsCategory = category.ProductsCategory,
-                ProductTypeId = category.ProductTypeId,
-                ProductType = category.ProductType,
-                DisplayOrder = category.DisplayOrder
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                ProductsCategory = product.ProductsCategory,
+                ProductTypeId = product.ProductTypeId,
+                ProductType = product.ProductType,
+                DisplayOrder = product.DisplayOrder
             };
         }
 
-        public static List<ProductViewModel> ToViewModelList(this IEnumerable<Product> category)
+        public static List<ProductViewModel> ToViewModelList(this IEnumerable<Product> products)
         {
-            return category.Select(x => x.ToViewModel()).ToList();
+            return products.Select(x => x.ToViewModel()).ToList();
         }
-        public static Product ToEntity(this ProductViewModel category)
+        public static Product ToEntity(this ProductViewModel  product)
         {
             return new Product
             {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                ProductsCategory = product.ProductsCategory,
+                ProductTypeId = product.ProductTypeId,
+                ProductType = product.ProductType,
+                DisplayOrder = product.DisplayOrder
+            };
+        }
+
+        #endregion
+
+        #region ProductType
+        public static ProductTypeViewModel ToViewModel(this ProductType category)
+        {
+            return new ProductTypeViewModel
+            {
                 Id = category.Id,
                 Name = category.Name,
-                Description = category.Description,
-                ProductsCategory = category.ProductsCategory,
-                ProductTypeId = category.ProductTypeId,
-                ProductType = category.ProductType,
-                DisplayOrder = category.DisplayOrder
+            };
+        }
+
+        public static List<ProductTypeViewModel> ToViewModelList(this IEnumerable<ProductType> productTypes)
+        {
+            return productTypes.Select(x => x.ToViewModel()).ToList();
+        }
+        public static ProductType ToEntity(this ProductTypeViewModel productType)
+        {
+            return new ProductType
+            {
+                Id = productType.Id,
+                Name = productType.Name,
             };
         }
 

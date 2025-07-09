@@ -2,7 +2,7 @@
 
 namespace FoodHunter.ViewModel
 {
-    public class BaseViewModel
+    public record BaseViewModel
     {
         public int Id { get; set; }
     }

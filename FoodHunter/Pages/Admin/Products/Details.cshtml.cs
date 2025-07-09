@@ -1,25 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Core.Models;
-using Data;
+using Service.Interfaces;
 
 namespace FoodHunter.Pages.Admin.Products
 {
     public class DetailsModel : PageModel
     {
-        private readonly Data.ApplicationDbContext _context;
-
-        public DetailsModel(Data.ApplicationDbContext context)
-        {
-            _context = context;
-        }
+        private readonly IProductService _productService;
 
         public Product Product { get; set; } = default!;
+        public DetailsModel(IProductService  productService)
+        {
+            _productService = productService;
+        }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -28,7 +26,7 @@ namespace FoodHunter.Pages.Admin.Products
                 return NotFound();
             }
 
-            var product = await _context.Products.FirstOrDefaultAsync(m => m.Id == id);
+            var product = await _productService.GetProductByIdAsync(id.Value);
             if (product == null)
             {
                 return NotFound();
