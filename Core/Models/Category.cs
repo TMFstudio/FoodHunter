@@ -1,12 +1,11 @@
 ﻿
+using Data;
 using System.ComponentModel.DataAnnotations;
 
 namespace Core.Models
 {
-    public partial class Category
+    public partial class Category : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }

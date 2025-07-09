@@ -1,11 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Data;
+using System.ComponentModel.DataAnnotations;
 
 namespace Core.Models
 {
-    public class ProductType
+    public class ProductType: BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
     }

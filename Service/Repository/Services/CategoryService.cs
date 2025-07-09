@@ -11,9 +11,35 @@ namespace Service.Repository.Services
         {
             this._categoryRepository = categoryRepository;
         }
-        public IEnumerable<Category> GetCategories()
+
+        public virtual async Task DeleteCategoryByIdAsync(int id)
         {
-        return   _categoryRepository.GetAll();
+            var entity = await _categoryRepository.GetByIdAsync(id);
+            if (entity != null)
+            {
+                await _categoryRepository.RemoveAsync(entity);
+            }
+
+        }
+
+        public virtual async Task<IEnumerable<Category>> GetCategoriesAsync()
+        {
+            return await _categoryRepository.GetAllAsync();
+        }
+
+        public virtual async Task<Category> GetCategoryByIdAsync(int id)
+        {
+            return await _categoryRepository.GetByIdAsync(id);
+        }
+
+        public virtual async Task InsertCategoryAsync(Category category)
+        {
+            await _categoryRepository.InsertAsync(category);
+        }
+
+        public virtual async Task UpdateCategoryAsync(Category category)
+        {
+            await _categoryRepository.UpdateAsync(category);
         }
     }
 }

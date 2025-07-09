@@ -17,18 +17,17 @@ namespace FoodHunter.Admin.Categories
         }
         public async Task OnGet()
         {
-            categories= _categoryService.GetCategories().ToViewModelList();   
+          var entity= await _categoryService.GetCategoriesAsync();  
+            categories=entity.ToViewModelList();
         }
-        //public async Task<IActionResult> OnPostAsync(int id)
-        //{
-        //    if (id != 0)
-        //    {
-        //        var entity = await _categoryService.Categories.FindAsync(id);
-        //        _dbContext.Categories.Remove(entity);
-        //        await _dbContext.SaveChangesAsync();
-        //        return RedirectToPage();
-        //    }
-        //    return RedirectToPage();
-        //}
+        public async Task<IActionResult> OnPostAsync(int id)
+        {
+            if (id != 0)
+            {
+               await _categoryService.DeleteCategoryByIdAsync(id);
+                return RedirectToPage();
+            }
+            return RedirectToPage();
+        }
     }
 }

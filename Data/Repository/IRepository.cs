@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace Data.Repository
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository<TEntity> where TEntity : BaseEntity
     {
-        void Add(T entity);
-        void Update(T entity);
-        void Remove(T entity);
-        void RemoveRange(IEnumerable<T> entity);
-        IEnumerable<T> GetAll();
-        T Getid(Expression<Func<T, bool>>? filter = null);
-        T Getid(object id);
+        Task InsertAsync(TEntity entity);
+        Task UpdateAsync(TEntity entity);
+        Task RemoveAsync(TEntity entity);
+        Task RemoveRangeAsync(IEnumerable<TEntity> entity);
+        Task<IEnumerable<TEntity>> GetAllAsync();
+        Task<TEntity> GetByIdAsync(int? id, Expression<Func<TEntity, bool>>? filter = null);
+
 
     }
 }

@@ -1,14 +1,14 @@
 ﻿
 
+using Data;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Models
 {
-    public class Product
+    public class Product: BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
+
         [ForeignKey("ProudctType")]
         public int ProductTypeId { get; set; }
         [Required]
