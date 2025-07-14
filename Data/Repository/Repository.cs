@@ -83,5 +83,13 @@ namespace Data.Repository
                 return _dbSet;
             }
         }
+        public virtual IQueryable<TEntity> Table
+        {
+            get
+            {
+                return this.Entities;
+            }
+        }
+
     }
 }

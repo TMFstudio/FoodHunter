@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Core.Models;
-using Data;
 using Service.Interfaces;
-using Service.Services;
 using FoodHunter.ViewModel;
 using FoodHunter.Mapper;
 
@@ -27,7 +20,6 @@ namespace FoodHunter.Pages.Admin.ProductsType
 
         public async Task<IActionResult> OnGet()
         {
-            //ViewData["ProductTypeId"] = new SelectList(_productService.ProductTypes, "Id", "Name");
             return Page();
         }
 

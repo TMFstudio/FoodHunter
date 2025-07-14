@@ -1,5 +1,4 @@
-using Core.Models;
-using Data;
+
 using FoodHunter.Mapper;
 using FoodHunter.ViewModel;
 using Microsoft.AspNetCore.Mvc;

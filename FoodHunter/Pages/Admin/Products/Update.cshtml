@@ -17,7 +17,7 @@
             <input type="hidden" asp-for="Product.Id" />
             <div class="form-group">
                 <label asp-for="Product.ProductTypeId" class="control-label"></label>
-                <select asp-for="Product.ProductTypeId" class="form-control" asp-items="ViewBag.ProductTypeId"></select>
+                <select asp-for="Product.ProductTypeId" class="form-control" asp-items="Model.Product.ProductType"></select>
                 <span asp-validation-for="Product.ProductTypeId" class="text-danger"></span>
             </div>
             <div class="form-group">

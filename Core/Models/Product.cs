@@ -20,6 +20,6 @@ namespace Core.Models
         public int DisplayOrder { get; set; }
         public ProductType ProductType { get; set; }
 
-        public ProductsCategory ProductsCategory { get; set; }
+        public ProductCategory ProductCategory { get; set; }
     }
 }

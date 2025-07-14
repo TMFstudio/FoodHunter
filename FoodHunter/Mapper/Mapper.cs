@@ -17,7 +17,7 @@ namespace FoodHunter.Mapper
             };
         }
 
-        public static List<CategoryViewModel> ToViewModelList(this IEnumerable<Category> category)
+        public static IEnumerable<CategoryViewModel> ToViewModelList(this IEnumerable<Category> category)
         {
            return category.Select(x=>x.ToViewModel()).ToList();
         }
@@ -42,14 +42,14 @@ namespace FoodHunter.Mapper
                 Id = product.Id,
                 Name = product.Name,
                 Description = product.Description,
-                ProductsCategory = product.ProductsCategory,
+                CreateDate = product.CreateDate,
+                ProductTypeName = product.ProductType.Name,
                 ProductTypeId = product.ProductTypeId,
-                ProductType = product.ProductType,
-                DisplayOrder = product.DisplayOrder
+                DisplayOrder = product.DisplayOrder,
             };
         }
 
-        public static List<ProductViewModel> ToViewModelList(this IEnumerable<Product> products)
+        public static IEnumerable<ProductViewModel> ToViewModelList(this IEnumerable<Product> products)
         {
             return products.Select(x => x.ToViewModel()).ToList();
         }
@@ -60,9 +60,8 @@ namespace FoodHunter.Mapper
                 Id = product.Id,
                 Name = product.Name,
                 Description = product.Description,
-                ProductsCategory = product.ProductsCategory,
+                CreateDate = product.CreateDate,
                 ProductTypeId = product.ProductTypeId,
-                ProductType = product.ProductType,
                 DisplayOrder = product.DisplayOrder
             };
         }
@@ -70,16 +69,16 @@ namespace FoodHunter.Mapper
         #endregion
 
         #region ProductType
-        public static ProductTypeViewModel ToViewModel(this ProductType category)
+        public static ProductTypeViewModel ToViewModel(this ProductType productType)
         {
             return new ProductTypeViewModel
             {
-                Id = category.Id,
-                Name = category.Name,
+                Id = productType.Id,
+                Name = productType.Name,
             };
         }
 
-        public static List<ProductTypeViewModel> ToViewModelList(this IEnumerable<ProductType> productTypes)
+        public static IEnumerable<ProductTypeViewModel> ToViewModelList(this IEnumerable<ProductType> productTypes)
         {
             return productTypes.Select(x => x.ToViewModel()).ToList();
         }
@@ -91,6 +90,38 @@ namespace FoodHunter.Mapper
                 Name = productType.Name,
             };
         }
+
+        #endregion
+
+        #region ProductCategory
+
+        public static ProductCategoryViewModel ToViewModel(this ProductCategory  productCategory)
+        {
+            return new ProductCategoryViewModel
+            {
+                Id = productCategory.Id,
+                Product = productCategory.Product,
+                Category = productCategory.Category,
+                CategoryId = productCategory.CategoryId,
+                ProductId = productCategory.ProductId,
+            };
+        }
+        public static IEnumerable<ProductCategoryViewModel> ToViewModelList(this IEnumerable<ProductCategory> productCategory)
+        {
+            return productCategory.Select(x => x.ToViewModel()).ToList();
+        }
+        public static ProductCategory ToEntity(this ProductCategoryViewModel productCategory)
+        {
+            return new ProductCategory
+            {
+                Id = productCategory.Id,
+                Product = productCategory.Product,
+                Category = productCategory.Category,
+                CategoryId = productCategory.CategoryId,
+                ProductId = productCategory.ProductId,
+            };
+        }
+
 
         #endregion
     }

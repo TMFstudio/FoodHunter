@@ -1,5 +1,6 @@
 ﻿using Core.Models;
 using Data.Repository;
+using Microsoft.EntityFrameworkCore;
 using Service.Interfaces;
 
 namespace Service.Services
@@ -7,9 +8,16 @@ namespace Service.Services
     public class ProductService : IProductService
     {
         private readonly IRepository<Product> _productRepository;
-        public ProductService(IRepository<Product> productRepository)
+        private readonly IRepository<ProductType> _productTypeRepository;
+        private readonly IRepository<Category> _CategoryRepository;
+        public ProductService(IRepository<Product> productRepository,
+          IRepository<ProductType> productTypeRepository,
+          IRepository<Category> categoryRepository)
         {
             _productRepository = productRepository;
+            _productTypeRepository = productTypeRepository;
+            _CategoryRepository = categoryRepository;
+
         }
 
         public virtual async Task DeleteProductByIdAsync(int id)
@@ -24,12 +32,19 @@ namespace Service.Services
 
         public virtual async Task<IEnumerable<Product>> GetAllProductsAsync()
         {
-            return await _productRepository.GetAllAsync();
+            var query = _productRepository.Table.Include(x => x.ProductType).Include(x => x.ProductCategory);
+            return await query.ToListAsync();
         }
 
         public virtual async Task<Product> GetProductByIdAsync(int id)
         {
-            return await _productRepository.GetByIdAsync(id);
+            var product = await _productRepository.Table
+            .Include(x => x.ProductType)
+            .FirstOrDefaultAsync(x => x.Id == id);
+                 if (product == null)
+                    return null;
+
+            return product;
         }
 
         public virtual async Task InsertProductAsync(Product product)

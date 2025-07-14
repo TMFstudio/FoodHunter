@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Service.Interfaces;
-using FoodHunter.ViewModel;
 using FoodHunter.Mapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using FoodHunter.ViewModel;
+using Core.Models;
 
 
 namespace FoodHunter.Pages.Admin.Products
@@ -12,21 +14,32 @@ namespace FoodHunter.Pages.Admin.Products
     public class CreateModel : PageModel
     {
         private readonly IProductService _productService;
+        private readonly IProductTypeService _productTypeService;
         public ProductViewModel Product { get; set; } = default!;
 
-        public CreateModel(IProductService productService)
+
+
+        public CreateModel(IProductService productService, IProductTypeService productTypeService)
         {
             _productService = productService;
+            _productTypeService = productTypeService;
         }
 
         public async Task<IActionResult> OnGet()
-        {
-            //ViewData["ProductTypeId"] = new SelectList(_productService.ProductTypes, "Id", "Name");
+        {                                     
+            var products=await _productTypeService.GetAllProductTypesAsync();
+            Product = new ProductViewModel
+            {
+                ProductType = products.Select(item => new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.Id.ToString()
+                }).ToList()
+            };
             return Page();
         }
 
-        // For more information, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPost()
         {
             if (ModelState.IsValid)
             {

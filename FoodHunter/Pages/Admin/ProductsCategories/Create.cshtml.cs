@@ -1,46 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using FoodHunter.Mapper;
+using FoodHunter.ViewModel;
+using Service.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Core.Models;
-using Data;
+using Service.Services;
 
 namespace FoodHunter.Pages.Admin.ProductsCategories
 {
+    [BindProperties]
     public class CreateModel : PageModel
     {
-        private readonly Data.ApplicationDbContext _context;
-
-        public CreateModel(Data.ApplicationDbContext context)
+        private readonly IProductsCategoriesService _productsCategoriesService;
+        public ProductCategoryViewModel ProductCategory { get; set; } = default!;
+        public CreateModel(IProductsCategoriesService  productsCategoriesService)
         {
-            _context = context;
+            _productsCategoriesService = productsCategoriesService;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
-        ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name");
-        ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Name");
+            var productsCategories = await _productsCategoriesService.GetAllProductAsync();
+            ViewData["ProductId"] = new SelectList(productsCategories, "Id", "Name");
+            ViewData["CategoryId"] = new SelectList(productsCategories, "Id", "Name");
             return Page();
         }
 
-        [BindProperty]
-        public ProductsCategory ProductsCategory { get; set; } = default!;
-
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return Page();
+                var entity = ProductCategory.ToEntity();
+                await _productsCategoriesService.InsertProductCategoryAsync(entity);
+                return RedirectToPage("Index");
             }
-
-            _context.ProductsCategories.Add(ProductsCategory);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
+            return Page();
         }
     }
 }

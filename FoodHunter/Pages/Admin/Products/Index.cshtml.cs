@@ -1,27 +1,29 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Service.Interfaces;
 using FoodHunter.ViewModel;
 using FoodHunter.Mapper;
-using Service.Interfaces;
 
 namespace FoodHunter.Pages.Admin.Products
 {
     public class IndexModel : PageModel
     {
         private readonly IProductService _productService;
+        private readonly IProductTypeService _productTypeService;
         public IEnumerable<ProductViewModel> Products { get; set; } = default!;
 
-        public IndexModel(IProductService productService)
+        public IndexModel(IProductService productService, IProductTypeService productTypeService)
         {
             _productService = productService;
+            _productTypeService  = productTypeService;
         }
 
         public async Task OnGetAsync()
         {
-            //prepare
             var entity = await _productService.GetAllProductsAsync();
-            Products = entity.ToViewModelList();
-
+               if(entity != null) 
+                Products= entity.ToViewModelList();
+    ;
         }
         public async Task<IActionResult> OnPostAsync(int id)
         {

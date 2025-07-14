@@ -15,7 +15,6 @@ namespace Data.Repository
         Task RemoveRangeAsync(IEnumerable<TEntity> entity);
         Task<IEnumerable<TEntity>> GetAllAsync();
         Task<TEntity> GetByIdAsync(int? id, Expression<Func<TEntity, bool>>? filter = null);
-
-
+        IQueryable<TEntity> Table { get; }
     }
 }

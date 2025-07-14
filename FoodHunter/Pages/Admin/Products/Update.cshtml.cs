@@ -3,17 +3,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using FoodHunter.Mapper;
-using FoodHunter.ViewModel;
 using Service.Interfaces;
+using FoodHunter.ViewModel;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FoodHunter.Pages.Admin.Products
 {
     [BindProperties]
     public class UpdateModel : PageModel
     {
+        private readonly IProductTypeService _productTypeService;
         private readonly IProductService _productService;
-        public UpdateModel(IProductService productService)
+        public UpdateModel(IProductService productService, IProductTypeService productTypeService)
         {
+            _productTypeService = productTypeService;
             _productService = productService;
         }
         public ProductViewModel Product { get; set; } = default!;
@@ -24,18 +27,27 @@ namespace FoodHunter.Pages.Admin.Products
             {
                 return NotFound();
             }
-
             var product = await _productService.GetProductByIdAsync(id.Value);
             if (product == null)
             {
                 return NotFound();
             }
+            //prepare product type
+            var productsType = await _productTypeService.GetAllProductTypesAsync();
             Product = product.ToViewModel();
-            //ViewData["ProductTypeId"] = new SelectList(_productService.ProductTypes, "Id", "Name");
+
+            Product.ProductType= productsType.Select(item => new SelectListItem
+                  {
+                      Text = item.Name,
+                      Value = item.Id.ToString()
+                  }).ToList();
+          
+
+          
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int id)
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {

@@ -1,25 +1,36 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using Core.Models;
+using Service.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using FoodHunter.Mapper;
+using FoodHunter.ViewModel;
 
 namespace FoodHunter.Pages.Admin.ProductsCategories
 {
+    [BindProperties]
     public class IndexModel : PageModel
     {
-        private readonly Data.ApplicationDbContext _context;
+        private readonly IProductsCategoriesService  _productsCategoriesService;
+        public IEnumerable<ProductCategoryViewModel> ProductCategory { get; set; } = default!;
 
-        public IndexModel(Data.ApplicationDbContext context)
+        public IndexModel(IProductsCategoriesService  productsCategoriesService)
         {
-            _context = context;
+            _productsCategoriesService = productsCategoriesService;
         }
-
-        public IList<ProductsCategory> ProductsCategory { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            ProductsCategory = await _context.ProductsCategories
-                .Include(p => p.Category)
-                .Include(p => p.Product).ToListAsync();
+            var entity = await _productsCategoriesService.GetAllProductsCategoriesAsync();
+            ProductCategory = entity.ToViewModelList();
+
+        }
+        public async Task<IActionResult> OnPostAsync(int id)
+        {
+            if (id != 0)
+            {
+                await _productsCategoriesService.DeleteProductCategoryByIdAsync(id);
+                return RedirectToPage();
+            }
+            return RedirectToPage();
         }
     }
 }

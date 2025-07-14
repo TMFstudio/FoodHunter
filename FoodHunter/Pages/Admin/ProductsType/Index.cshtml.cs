@@ -9,7 +9,7 @@ namespace FoodHunter.Pages.Admin.ProductsType
     public class IndexModel : PageModel
     {
         private readonly IProductTypeService _productTypeService;
-        public IList<ProductTypeViewModel> ProductTypes { get; set; } = default!;
+        public IEnumerable<ProductTypeViewModel> ProductTypes { get; set; } = default!;
 
         public IndexModel(IProductTypeService  productTypeService)
         {

@@ -95,7 +95,7 @@ namespace Data.Migrations
                     b.ToTable("ProductTypes");
                 });
 
-            modelBuilder.Entity("Core.Models.ProductsCategory", b =>
+            modelBuilder.Entity("Core.Models.ProductCategory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -131,17 +131,17 @@ namespace Data.Migrations
                     b.Navigation("ProductType");
                 });
 
-            modelBuilder.Entity("Core.Models.ProductsCategory", b =>
+            modelBuilder.Entity("Core.Models.ProductCategory", b =>
                 {
                     b.HasOne("Core.Models.Category", "Category")
-                        .WithOne("ProductsCategory")
-                        .HasForeignKey("Core.Models.ProductsCategory", "CategoryId")
+                        .WithOne("ProductCategory")
+                        .HasForeignKey("Core.Models.ProductCategory", "CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Core.Models.Product", "Product")
-                        .WithOne("ProductsCategory")
-                        .HasForeignKey("Core.Models.ProductsCategory", "ProductId")
+                        .WithOne("ProductCategory")
+                        .HasForeignKey("Core.Models.ProductCategory", "ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -152,13 +152,13 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Core.Models.Category", b =>
                 {
-                    b.Navigation("ProductsCategory")
+                    b.Navigation("ProductCategory")
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Core.Models.Product", b =>
                 {
-                    b.Navigation("ProductsCategory")
+                    b.Navigation("ProductCategory")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

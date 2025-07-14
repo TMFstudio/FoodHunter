@@ -10,7 +10,7 @@ namespace Core.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public int DisplayOrder { get; set; }
-        public ProductsCategory ProductsCategory { get; set; }
+        public ProductCategory ProductCategory { get; set; }
 
     }
 }
