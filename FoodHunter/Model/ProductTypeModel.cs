@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FoodHunter.ViewModel
+namespace FoodHunter.Model
 {
-    public record ProductTypeViewModel: BaseViewModel
+    public record ProductTypeModel: BaseModel
     {
         [Required(ErrorMessage ="this filed should not be empty")]
         public string Name { get; set; }

@@ -1,8 +1,8 @@
 ﻿using Core.Models;
 
-namespace FoodHunter.ViewModel
+namespace FoodHunter.Model
 {
-    public record ProductCategoryViewModel : BaseViewModel
+    public record ProductCategoryModel : BaseModel
     {
         public int CategoryId { get; set; }
         public Category Category { get; set; }

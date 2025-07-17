@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Core.Models;
 using Service.Interfaces;
 using FoodHunter.Mapper;
-using FoodHunter.ViewModel;
+using FoodHunter.Model;
 using Service.Services;
 
 namespace FoodHunter.Pages.Admin.ProductsCategories
@@ -15,7 +15,7 @@ namespace FoodHunter.Pages.Admin.ProductsCategories
     public class UpdateModel : PageModel
     {
         private readonly IProductsCategoriesService _productsCategoriesService;
-        public ProductCategoryViewModel ProductCategory { get; set; } = default!;
+        public ProductCategoryModel ProductCategory { get; set; } = default!;
 
         public UpdateModel(IProductsCategoriesService  productsCategoriesService)
         {
@@ -34,7 +34,7 @@ namespace FoodHunter.Pages.Admin.ProductsCategories
             {
                 return NotFound();
             }
-            ProductCategory = productCategory.ToViewModel();
+            ProductCategory = productCategory.ToModel();
            // ViewData["CategoryId"] = new SelectList(productCategory.Categories, "Id", "Description");
            //ViewData["ProductId"] = new SelectList(productCategory.Products, "Id", "CreateDate");
             return Page();

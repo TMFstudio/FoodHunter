@@ -1,14 +1,14 @@
 ﻿using Core.Models;
-using FoodHunter.ViewModel;
+using FoodHunter.Model;
 
 namespace FoodHunter.Mapper
 {
     public static class Mapper
     {
         #region Category
-        public static CategoryViewModel ToViewModel(this Category category)
+        public static CategoryModel ToModel(this Category category)
         {
-            return new CategoryViewModel
+            return new CategoryModel
             {
                 Id = category.Id,
                 Name = category.Name,
@@ -17,11 +17,11 @@ namespace FoodHunter.Mapper
             };
         }
 
-        public static IEnumerable<CategoryViewModel> ToViewModelList(this IEnumerable<Category> category)
+        public static IEnumerable<CategoryModel> ToModelList(this IEnumerable<Category> category)
         {
-           return category.Select(x=>x.ToViewModel()).ToList();
+           return category.Select(x=>x.ToModel()).ToList();
         }
-        public static Category ToEntity(this CategoryViewModel category)
+        public static Category ToEntity(this CategoryModel category)
         {
             return new Category
             {
@@ -35,25 +35,27 @@ namespace FoodHunter.Mapper
 
         #region Product
 
-        public static ProductViewModel ToViewModel(this Product  product)
+        public static ProductModel ToModel(this Product  product)
         {
-            return new ProductViewModel
+            return new ProductModel
             {
                 Id = product.Id,
                 Name = product.Name,
                 Description = product.Description,
                 CreateDate = product.CreateDate,
                 ProductTypeName = product.ProductType.Name,
+                Price = product.Price,
+                Image = product.Image,
                 ProductTypeId = product.ProductTypeId,
                 DisplayOrder = product.DisplayOrder,
             };
         }
 
-        public static IEnumerable<ProductViewModel> ToViewModelList(this IEnumerable<Product> products)
+        public static IEnumerable<ProductModel> ToModelList(this IEnumerable<Product> products)
         {
-            return products.Select(x => x.ToViewModel()).ToList();
+            return products.Select(x => x.ToModel()).ToList();
         }
-        public static Product ToEntity(this ProductViewModel  product)
+        public static Product ToEntity(this ProductModel  product)
         {
             return new Product
             {
@@ -62,6 +64,8 @@ namespace FoodHunter.Mapper
                 Description = product.Description,
                 CreateDate = product.CreateDate,
                 ProductTypeId = product.ProductTypeId,
+                Image = product.Image,
+                Price = product.Price,
                 DisplayOrder = product.DisplayOrder
             };
         }
@@ -69,20 +73,20 @@ namespace FoodHunter.Mapper
         #endregion
 
         #region ProductType
-        public static ProductTypeViewModel ToViewModel(this ProductType productType)
+        public static ProductTypeModel ToModel(this ProductType productType)
         {
-            return new ProductTypeViewModel
+            return new ProductTypeModel
             {
                 Id = productType.Id,
                 Name = productType.Name,
             };
         }
 
-        public static IEnumerable<ProductTypeViewModel> ToViewModelList(this IEnumerable<ProductType> productTypes)
+        public static IEnumerable<ProductTypeModel> ToModelList(this IEnumerable<ProductType> productTypes)
         {
-            return productTypes.Select(x => x.ToViewModel()).ToList();
+            return productTypes.Select(x => x.ToModel()).ToList();
         }
-        public static ProductType ToEntity(this ProductTypeViewModel productType)
+        public static ProductType ToEntity(this ProductTypeModel productType)
         {
             return new ProductType
             {
@@ -95,9 +99,9 @@ namespace FoodHunter.Mapper
 
         #region ProductCategory
 
-        public static ProductCategoryViewModel ToViewModel(this ProductCategory  productCategory)
+        public static ProductCategoryModel ToModel(this ProductCategory  productCategory)
         {
-            return new ProductCategoryViewModel
+            return new ProductCategoryModel
             {
                 Id = productCategory.Id,
                 Product = productCategory.Product,
@@ -106,11 +110,11 @@ namespace FoodHunter.Mapper
                 ProductId = productCategory.ProductId,
             };
         }
-        public static IEnumerable<ProductCategoryViewModel> ToViewModelList(this IEnumerable<ProductCategory> productCategory)
+        public static IEnumerable<ProductCategoryModel> ToModelList(this IEnumerable<ProductCategory> productCategory)
         {
-            return productCategory.Select(x => x.ToViewModel()).ToList();
+            return productCategory.Select(x => x.ToModel()).ToList();
         }
-        public static ProductCategory ToEntity(this ProductCategoryViewModel productCategory)
+        public static ProductCategory ToEntity(this ProductCategoryModel productCategory)
         {
             return new ProductCategory
             {

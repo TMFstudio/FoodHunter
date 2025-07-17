@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
-namespace FoodHunter.ViewModel
+namespace FoodHunter.Model
 {
-    public record ProductViewModel : BaseViewModel
+    public record ProductModel : BaseModel
     {
-        public ProductViewModel()
+        public ProductModel()
         {
             ProductType = new List<SelectListItem>();
 
@@ -24,6 +24,10 @@ namespace FoodHunter.ViewModel
         public string CreateDate { get; set; }
         [BindProperty]
         public string? ProductTypeName { get; set; }
+        [BindProperty]
+        public string? Image { get; set; }      
+        [BindProperty]
+        public double Price { get; set; }
         [BindProperty]
         public IList<SelectListItem>? ProductType { get; set; }
         [BindProperty]

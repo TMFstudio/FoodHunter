@@ -9,7 +9,6 @@ namespace Core.Models
     public class Product: BaseEntity
     {
 
-        [ForeignKey("ProudctType")]
         public int ProductTypeId { get; set; }
         [Required]
         public string Name { get; set; }
@@ -17,7 +16,10 @@ namespace Core.Models
         public string Description { get; set; }
         [Required]
         public string CreateDate { get; set; }
+        public string? Image { get; set; }
+        public double Price { get; set; }
         public int DisplayOrder { get; set; }
+        [ForeignKey("ProductTypeId")]
         public ProductType ProductType { get; set; }
 
         public ProductCategory ProductCategory { get; set; }

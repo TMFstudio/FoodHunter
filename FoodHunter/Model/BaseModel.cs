@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace FoodHunter.ViewModel
+namespace FoodHunter.Model
 {
-    public record BaseViewModel
+    public record BaseModel
     {
         public int Id { get; set; }
     }

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Core.Models;
 using Service.Interfaces;
 using FoodHunter.Mapper;
-using FoodHunter.ViewModel;
+using FoodHunter.Model;
 
 namespace FoodHunter.Pages.Admin.ProductsType
 {
@@ -17,7 +17,7 @@ namespace FoodHunter.Pages.Admin.ProductsType
     public class UpdateModel : PageModel
     {
         private readonly IProductTypeService  _productTypeService;
-        public ProductTypeViewModel ProductType { get; set; } = default!;
+        public ProductTypeModel ProductType { get; set; } = default!;
 
 
         public UpdateModel(IProductTypeService productTypeService)
@@ -36,7 +36,7 @@ namespace FoodHunter.Pages.Admin.ProductsType
             {
                 return NotFound();
             }
-            ProductType = product.ToViewModel();
+            ProductType = product.ToModel();
             //ViewData["ProductTypeId"] = new SelectList(_productService.ProductTypes, "Id", "Name");
             return Page();
         }

@@ -1,6 +1,6 @@
 
 using FoodHunter.Mapper;
-using FoodHunter.ViewModel;
+using FoodHunter.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Service.Interfaces;
@@ -12,7 +12,7 @@ namespace FoodHunter.Admin.Categories
     public class CreateModel : PageModel
     {
         private readonly ICategoryService _categoryService;
-        public CategoryViewModel Category { get; set; } = default!;
+        public CategoryModel Category { get; set; } = default!;
         public CreateModel(ICategoryService  categoryService)
         {
             _categoryService = categoryService;

@@ -1,7 +1,7 @@
 using Core.Models;
 using Data;
 using FoodHunter.Mapper;
-using FoodHunter.ViewModel;
+using FoodHunter.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +13,7 @@ namespace FoodHunter.Admin.Categories
     public class UpdateModel : PageModel
     {
         private readonly ICategoryService _categoryService;
-        public CategoryViewModel category { get; set; } = default!;
+        public CategoryModel category { get; set; } = default!;
 
         public UpdateModel(ICategoryService categoryService)
         {
@@ -30,7 +30,7 @@ namespace FoodHunter.Admin.Categories
             {
                 return NotFound();
             }
-            category = product.ToViewModel();
+            category = product.ToModel();
             return RedirectToPage("Index");
         }
         public async Task<IActionResult> OnPost()

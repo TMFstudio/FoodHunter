@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace FoodHunter.ViewModel
+namespace FoodHunter.Model
 {
 
-    public partial record CategoryViewModel : BaseViewModel
+    public partial record CategoryModel : BaseModel
     {
         [BindProperty]
         [Required(ErrorMessage = "the name should not be empty")]

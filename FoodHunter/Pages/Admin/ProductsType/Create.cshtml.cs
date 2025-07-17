@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Service.Interfaces;
-using FoodHunter.ViewModel;
+using FoodHunter.Model;
 using FoodHunter.Mapper;
 
 namespace FoodHunter.Pages.Admin.ProductsType
@@ -11,7 +11,7 @@ namespace FoodHunter.Pages.Admin.ProductsType
     public class CreateModel : PageModel
     {
         private readonly IProductTypeService  _productTypeService;
-        public ProductTypeViewModel ProductType { get; set; } = default!;
+        public ProductTypeModel ProductType { get; set; } = default!;
 
         public CreateModel(IProductTypeService  productTypeService)
         {

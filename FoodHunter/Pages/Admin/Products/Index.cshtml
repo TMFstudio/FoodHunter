@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="col-6">
-        <a asp-page="create" class="btn btn-primary">
+        <a asp-page="Create" class="btn btn-primary">
             Add New Product
         </a>
     </div>
@@ -34,6 +34,9 @@
                 Product Type
             </th>
             <th>
+                Product Price
+            </th>
+            <th>
                 display order
             </th>
             <th>
@@ -45,14 +48,16 @@
         @foreach (var item in Model.Products)
         {
             <tr>
-                <td width="60%">
+                <td width="40%">
                     @item.Name
                 </td>
                 <td width="15%">
                     @item.ProductTypeName
-
                 </td>
-                <td width="10%">
+                <td width="15%">
+                    @item.Price$
+                </td>
+                <td width="15%">
                     @item.DisplayOrder
                 </td>
                 <td width="15%">

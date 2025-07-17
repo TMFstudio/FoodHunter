@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using FoodHunter.Mapper;
 using Service.Interfaces;
-using FoodHunter.ViewModel;
+using FoodHunter.Model;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FoodHunter.Pages.Admin.Products
@@ -19,7 +19,7 @@ namespace FoodHunter.Pages.Admin.Products
             _productTypeService = productTypeService;
             _productService = productService;
         }
-        public ProductViewModel Product { get; set; } = default!;
+        public ProductModel Product { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -34,7 +34,7 @@ namespace FoodHunter.Pages.Admin.Products
             }
             //prepare product type
             var productsType = await _productTypeService.GetAllProductTypesAsync();
-            Product = product.ToViewModel();
+            Product = product.ToModel();
 
             Product.ProductType= productsType.Select(item => new SelectListItem
                   {

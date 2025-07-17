@@ -1,7 +1,7 @@
 using Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using FoodHunter.ViewModel;
+using FoodHunter.Model;
 using FoodHunter.Mapper;
 using Service.Interfaces;
 
@@ -10,7 +10,7 @@ namespace FoodHunter.Admin.Categories
     public class IndexModel : PageModel
     {
         private readonly ICategoryService _categoryService;
-        public IEnumerable<CategoryViewModel> categories { get; set; } = default!;
+        public IEnumerable<CategoryModel> categories { get; set; } = default!;
         public IndexModel(ICategoryService categoryService)
         {
             this._categoryService = categoryService;
@@ -18,7 +18,7 @@ namespace FoodHunter.Admin.Categories
         public async Task OnGet()
         {
           var entity= await _categoryService.GetCategoriesAsync();  
-            categories=entity.ToViewModelList();
+            categories=entity.ToModelList();
         }
         public async Task<IActionResult> OnPostAsync(int id)
         {
