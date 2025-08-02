@@ -8,9 +8,14 @@ namespace Service.Services
     public class ProductsCategoriesService : IProductsCategoriesService
     {
         private readonly IRepository<ProductCategory> _ProductCategoryRepository;
-        public ProductsCategoriesService(IRepository<ProductCategory> ProductCategoryRepository)
+        private readonly IRepository<Product> _ProductRepository;
+        private readonly IRepository<Category> _CategoryRepository;
+        public ProductsCategoriesService(IRepository<ProductCategory> ProductCategoryRepository, IRepository<Product> ProductRepository,
+          IRepository<Category> CategoryRepository)
         {
             _ProductCategoryRepository = ProductCategoryRepository;
+            _ProductRepository = ProductRepository;
+            _CategoryRepository = CategoryRepository;
         }
 
         public async Task DeleteProductCategoryByIdAsync(int id)
@@ -22,36 +27,43 @@ namespace Service.Services
             }
         }
 
-        public Task<IEnumerable<Category>> GetAllCategoriesAsync()
+        public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
         {
-            throw new NotImplementedException();
+            return await _CategoryRepository.GetAllAsync();
+
         }
 
-        public Task<IEnumerable<Product>> GetAllProductAsync()
+        public async Task<IEnumerable<Product>> GetAllProductAsync()
         {
-            throw new NotImplementedException();
+            return await _ProductRepository.GetAllAsync();
         }
 
         public virtual async Task<IEnumerable<ProductCategory>> GetAllProductsCategoriesAsync()
         {
-            var entity=  _ProductCategoryRepository.Table.Include(x => x.Category)
+            var entity = _ProductCategoryRepository.Table.Include(x => x.Category)
                 .Include(x => x.Product);
             return await entity.ToListAsync();
         }
 
-        public virtual async Task<ProductCategory> GetProductCategoryByIdAsync(int id)
+        public virtual async Task<ProductCategory> GetProductCategoryAsync(int id, int? categoryId = 0, int? ProductId = 0)
         {
             return await _ProductCategoryRepository.GetByIdAsync(id);
         }
 
+
         public virtual async Task InsertProductCategoryAsync(ProductCategory product)
         {
-             await _ProductCategoryRepository.InsertAsync(product);
+            await _ProductCategoryRepository.InsertAsync(product);
         }
 
         public virtual async Task UpdateProductCategoryAsync(ProductCategory product)
         {
-             await _ProductCategoryRepository.UpdateAsync(product);
+            await _ProductCategoryRepository.UpdateAsync(product);
+        }
+        public virtual async Task<bool> CheckProductCategoryExistenceAsync(int categoryId, int ProductId)
+        {
+            var query =  _ProductCategoryRepository.Table;
+            return await query.AnyAsync(x => x.CategoryId == categoryId && x.ProductId == ProductId); 
         }
     }
 }

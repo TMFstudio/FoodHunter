@@ -21,7 +21,7 @@ namespace FoodHunter.Model
         public int ProductTypeId { get; set; }
         [Required(ErrorMessage = "the name should not be empty")]
         [BindProperty]
-        public string CreateDate { get; set; }
+        public DateTime? CreateDate { get; set; }
         [BindProperty]
         public string? ProductTypeName { get; set; }
         [BindProperty]

@@ -15,13 +15,14 @@ namespace Core.Models
         [Required]
         public string Description { get; set; }
         [Required]
-        public string CreateDate { get; set; }
+        public DateTime? CreateDate { get; set; }
         public string? Image { get; set; }
         public double Price { get; set; }
         public int DisplayOrder { get; set; }
+
         [ForeignKey("ProductTypeId")]
         public ProductType ProductType { get; set; }
 
-        public ProductCategory ProductCategory { get; set; }
+        public ICollection<ProductCategory> ProductCategory { get; set; }
     }
 }

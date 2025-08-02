@@ -20,6 +20,18 @@ namespace FoodHunter.Pages.Admin.Products
             _productService = productService;
         }
         public ProductModel Product { get; set; } = default!;
+        protected virtual async Task PrepareProductCategory()
+        {
+            var products = await _productTypeService.GetAllProductTypesAsync();
+            Product = new ProductModel
+            {
+                ProductType = products.Select(item => new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.Id.ToString()
+                }).ToList()
+            };
+        }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -32,39 +44,29 @@ namespace FoodHunter.Pages.Admin.Products
             {
                 return NotFound();
             }
-            //prepare product type
-            var productsType = await _productTypeService.GetAllProductTypesAsync();
-            Product = product.ToModel();
+            await PrepareProductCategory();
 
-            Product.ProductType= productsType.Select(item => new SelectListItem
-                  {
-                      Text = item.Name,
-                      Value = item.Id.ToString()
-                  }).ToList();
-          
 
-          
+
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return Page();
-            }
-            try
-            {
+                await PrepareProductCategory();
                 var entity = Product.ToEntity();
-
-                await _productService.UpdateProductAsync(entity);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
+                if (entity == null)
+                {
                     return NotFound();
+                }
+                await _productService.UpdateProductAsync(entity);
+                return RedirectToPage("./Index");
             }
+            await PrepareProductCategory();
 
-            return RedirectToPage("./Index");
+            return Page();
         }
     }
 }

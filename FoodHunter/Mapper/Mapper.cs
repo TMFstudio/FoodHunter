@@ -104,8 +104,6 @@ namespace FoodHunter.Mapper
             return new ProductCategoryModel
             {
                 Id = productCategory.Id,
-                Product = productCategory.Product,
-                Category = productCategory.Category,
                 CategoryId = productCategory.CategoryId,
                 ProductId = productCategory.ProductId,
             };
@@ -119,8 +117,6 @@ namespace FoodHunter.Mapper
             return new ProductCategory
             {
                 Id = productCategory.Id,
-                Product = productCategory.Product,
-                Category = productCategory.Category,
                 CategoryId = productCategory.CategoryId,
                 ProductId = productCategory.ProductId,
             };
