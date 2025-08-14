@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Service.Interfaces;
 using FoodHunter.Model;
 using FoodHunter.Mapper;
+using Core.Models;
 
 namespace FoodHunter.Pages.Admin.Products
 {
@@ -21,6 +22,7 @@ namespace FoodHunter.Pages.Admin.Products
         public async Task OnGetAsync()
         {
             var entity = await _productService.GetAllProductsAsync();
+
                if(entity != null) 
                 Products= entity.ToModelList();
     ;

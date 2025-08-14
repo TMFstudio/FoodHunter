@@ -1,4 +1,5 @@
-﻿using Core.Models;
+﻿using Core;
+using Core.Models;
 using Data.Repository;
 using Service.Interfaces;
 
@@ -22,9 +23,13 @@ namespace Service.Services
 
         }
 
-        public virtual async Task<IEnumerable<Category>> GetCategoriesAsync()
+        public virtual async Task<IPagedList<Category>> GetCategoriesAsync(int pageIndex = 0, int pageSize = 0)
         {
-            return await _categoryRepository.GetAllAsync();
+            return await _categoryRepository.GetAllPagedAsync(async query =>
+            {
+                query = query.OrderByDescending(x => x.DisplayOrder);
+                return query;
+            }, pageIndex ,  pageSize : pageSize);
         }
 
         public virtual async Task<Category> GetCategoryByIdAsync(int id)

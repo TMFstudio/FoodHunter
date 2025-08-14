@@ -68,6 +68,11 @@
                 </td>
             </tr>
         }
-
+@*         @{
+            var prevDisabled = !Model.HasP ? "disabled":"";
+            var nextDisabled = !Model.HasP ? "disabled" : "";
+        }
+        <a asp-action="Index" asp-route-pageNumber="@(Model.pageIndex-1)" class="btn btn-default" @prevDisabled>Previous</a>
+        <a asp-action="Index" asp-route-pageNumber="@(Model.pageIndex-1)" class="btn btn-default" @nextDisabled> Next</a> *@
     </tbody>
 </table>

@@ -1,4 +1,5 @@
-﻿using Core.Models;
+﻿using Core;
+using Core.Models;
 using FoodHunter.Model;
 
 namespace FoodHunter.Mapper
@@ -17,7 +18,7 @@ namespace FoodHunter.Mapper
             };
         }
 
-        public static IEnumerable<CategoryModel> ToModelList(this IEnumerable<Category> category)
+        public static IEnumerable<CategoryModel> ToModelList(this IPagedList<Category> category)
         {
            return category.Select(x=>x.ToModel()).ToList();
         }

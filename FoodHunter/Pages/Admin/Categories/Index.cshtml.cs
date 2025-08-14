@@ -4,21 +4,30 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using FoodHunter.Model;
 using FoodHunter.Mapper;
 using Service.Interfaces;
+using Core;
 
 namespace FoodHunter.Admin.Categories
 {
     public class IndexModel : PageModel
     {
         private readonly ICategoryService _categoryService;
-        public IEnumerable<CategoryModel> categories { get; set; } = default!;
+        public CategoryListModel Categories { get; set; }=new CategoryListModel();
         public IndexModel(ICategoryService categoryService)
         {
             this._categoryService = categoryService;
         }
-        public async Task OnGet()
+        public async Task OnGet(int pageindex)
         {
-          var entity= await _categoryService.GetCategoriesAsync();  
-            categories=entity.ToModelList();
+          var categories= await _categoryService.GetCategoriesAsync(pageIndex: pageindex , pageSize: 3);
+           
+            var model=   categories.Select(category =>
+            {
+                var m = category.ToModel();
+                return m;
+            }).ToList();
+            Categories.categoryModels = model;
+          Categories.PageIndex= categories.PageIndex;
+            Categories.TotalPage= categories.TotalPages;
         }
         public async Task<IActionResult> OnPostAsync(int id)
         {

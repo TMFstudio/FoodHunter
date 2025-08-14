@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Core;
+using Data.Extantion;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
@@ -23,6 +25,15 @@ namespace Data.Repository
 
                await _db.SaveChangesAsync();
 
+        }
+        public virtual async Task<IPagedList<TEntity>> GetAllPagedAsync(Func<IQueryable<TEntity>, Task<IQueryable<TEntity>>> func = null,
+       int pageIndex = 0, int pageSize = 0, bool getOnlyTotalCount = false)
+        {
+            var query = Table;
+
+            query = func != null ? await func(query) : query;
+
+            return await query.ToPagedListAsync(pageIndex, pageSize, getOnlyTotalCount);
         }
 
         public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
