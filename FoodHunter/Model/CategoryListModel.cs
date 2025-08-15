@@ -6,6 +6,6 @@
         {
             categoryModels = new List<CategoryModel>();
         }
-        public IEnumerable<CategoryModel> categoryModels  { get; set; } = new List<CategoryModel>();
+        public List<CategoryModel> categoryModels  { get; set; }
     }
 }

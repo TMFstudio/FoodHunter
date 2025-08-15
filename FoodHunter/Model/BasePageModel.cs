@@ -5,9 +5,10 @@ namespace FoodHunter.Model
     {
         public int PageIndex { get; set; }
         public int TotalPage { get; set; }
+        public int CurrentPage { get; set; }
 
-        public bool HasPreviousPage => PageIndex > 1;
-        public bool HasNextPage => PageIndex < TotalPage;
+        public bool HasPreviousPage => CurrentPage > 1;
+        public bool HasNextPage => CurrentPage < TotalPage;
 
     }
 

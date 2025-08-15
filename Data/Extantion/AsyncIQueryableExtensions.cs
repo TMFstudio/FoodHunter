@@ -17,6 +17,7 @@ namespace Data.Extantion
 
             //min allowed page size is 1
             pageSize = Math.Max(pageSize, 1);
+            pageIndex = Math.Max(pageIndex, 0);
 
             var count = await source.CountAsync();
 

@@ -31,7 +31,7 @@ namespace FoodHunter.Admin.Categories
                 return NotFound();
             }
             category = product.ToModel();
-            return RedirectToPage("Index");
+            return Page();
         }
         public async Task<IActionResult> OnPost()
         {

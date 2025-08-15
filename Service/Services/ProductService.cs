@@ -1,4 +1,5 @@
-﻿using Core.Models;
+﻿using Core;
+using Core.Models;
 using Data.Repository;
 using Microsoft.EntityFrameworkCore;
 using Service.Interfaces;
@@ -30,10 +31,15 @@ namespace Service.Services
 
         }
 
-        public virtual async Task<IEnumerable<Product>> GetAllProductsAsync()
+        public virtual async Task<IPagedList<Product>> GetAllProductsAsync(int pageIndex=0,int pageSize=int.MaxValue)
         {
-            var query = _productRepository.Table.Include(x => x.ProductType).Include(x => x.ProductCategory);
-            return await query.ToListAsync();
+            return await _productRepository.GetAllPagedAsync(async query =>
+            {
+                query = query.Include(x => x.ProductType).Include(x => x.ProductCategory);
+                query.OrderByDescending(x=>x.CreateDate);
+                return query;
+
+            },pageIndex,pageSize);
         }
 
         public virtual async Task<Product> GetProductByIdAsync(int id)

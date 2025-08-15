@@ -27,7 +27,7 @@ namespace Data.Repository
 
         }
         public virtual async Task<IPagedList<TEntity>> GetAllPagedAsync(Func<IQueryable<TEntity>, Task<IQueryable<TEntity>>> func = null,
-       int pageIndex = 0, int pageSize = 0, bool getOnlyTotalCount = false)
+       int pageIndex = 0, int pageSize = int.MaxValue, bool getOnlyTotalCount = false)
         {
             var query = Table;
 

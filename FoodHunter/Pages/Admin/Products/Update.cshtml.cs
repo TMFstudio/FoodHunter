@@ -19,7 +19,7 @@ namespace FoodHunter.Pages.Admin.Products
             _productTypeService = productTypeService;
             _productService = productService;
         }
-        public ProductModel Product { get; set; } = default!;
+        public ProductModel Product { get; set; } = new ProductModel();
         protected virtual async Task PrepareProductCategory()
         {
             var products = await _productTypeService.GetAllProductTypesAsync();
@@ -29,7 +29,7 @@ namespace FoodHunter.Pages.Admin.Products
                 {
                     Text = item.Name,
                     Value = item.Id.ToString()
-                }).ToList()
+                }).ToList()                
             };
         }
 
@@ -39,12 +39,14 @@ namespace FoodHunter.Pages.Admin.Products
             {
                 return NotFound();
             }
-            var product = await _productService.GetProductByIdAsync(id.Value);
+           var product = await _productService.GetProductByIdAsync(id.Value);
+
             if (product == null)
             {
                 return NotFound();
             }
             await PrepareProductCategory();
+            Product = product.ToModel();
 
 
 

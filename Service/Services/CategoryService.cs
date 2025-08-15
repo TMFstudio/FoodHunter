@@ -23,7 +23,7 @@ namespace Service.Services
 
         }
 
-        public virtual async Task<IPagedList<Category>> GetCategoriesAsync(int pageIndex = 0, int pageSize = 0)
+        public virtual async Task<IPagedList<Category>> GetAllCategoriesAsync(int pageIndex = 0, int pageSize= int.MaxValue)
         {
             return await _categoryRepository.GetAllPagedAsync(async query =>
             {

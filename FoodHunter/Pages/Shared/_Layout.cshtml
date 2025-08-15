@@ -4,58 +4,110 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - FoodHunter</title>
+    <link rel="stylesheet" href="~/css/Home-Page.css" />
     <link rel="stylesheet" href="~/css/Theme-brite.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/FoodHunter.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
 <body>
+    <!-- Header -->
     <header>
-        <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="/Index">Navbar</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarColor02">
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="/index">
-                                Profile
-                                <span class="visually-hidden">(current)</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-page="Aboutus">Aboutus</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-page="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-page="/Admin/Categories/Index">Categories</a>
-                                <a class="dropdown-item" asp-page="/Admin/Products/Index">Products</a>
-                                <a class="dropdown-item" asp-page="/Admin/ProductsType/Index">ProductsType</a>
-                                <a class="dropdown-item" asp-page="/Admin/ProductsCategories/Index">ProductsCategories</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Separated link</a>
-                            </div>
-                        </li>
-                    </ul>
+        <div class="container header-container">
+            <a asp-page="/Index" class="logo">
+                <i class="fas fa-utensils"></i>
+                FreshBites
+            </a>
+            <nav id="main-nav">
+                <ul class="nav-menu">
+                    <li><a asp-page="/Index" class="active">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#"><i class="fas fa-chevron-down"></i> Menu</a>
+                        <div class="dropdown-content">
+                            <a class="dropdown-item" asp-page="/Admin/Categories/Index">Categories</a>
+                            <a class="dropdown-item" asp-page="/Admin/Products/Index">Products</a>
+                            <a class="dropdown-item" asp-page="/Admin/ProductsType/Index">ProductsType</a>
+                            <a class="dropdown-item" asp-page="/Admin/ProductsCategories/Index">ProductsCategories</a>
+                        </div>
+                    </li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+@*                 <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search food...">
                 </div>
+
+                <div class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">3</span>
+                </div>
+
+                <div class="user-icon">
+                    <i class="fas fa-user"></i>
+                </div>
+
+                <div class="mobile-menu-btn" id="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div> *@
+
             </div>
-        </nav>
+        </div>
     </header>
-    <div class="container"style="margin-bottom:25%">
+
+    <div class="container" style="margin-bottom:25%">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
-
-    <footer class="footer  py-3 border-top  text-muted">
+    <!-- Footer -->
+    <footer>
         <div class="container">
-            &copy; 2025 - FoodHunter
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Gourmet Delight</h3>
+                    <p>Delivering delicious food since 2010. We pride ourselves on quality ingredients and excellent service.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Menu</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Opening Hours</h3>
+                    <ul>
+                        <li>Monday - Friday: 10AM - 10PM</li>
+                        <li>Saturday: 9AM - 11PM</li>
+                        <li>Sunday: 11AM - 9PM</li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Food Street, City</li>
+                        <li><i class="fas fa-phone"></i> (123) 456-7890</li>
+                        <li><i class="fas fa-envelope"></i> info@gourmetdelight.com</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2023 Gourmet Delight. All Rights Reserved.</p>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

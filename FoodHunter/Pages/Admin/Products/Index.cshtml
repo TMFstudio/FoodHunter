@@ -6,13 +6,10 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>Product List</h1>
-
-
 <div class="container p-3">
     <div class="row pt-4">
         <div class="col-6">
-            <h2 class="text-dark"> Category List</h2>
+            <h2 class="text-dark">Product List</h2>
         </div>
     </div>
     <div class="col-6">
@@ -45,7 +42,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Products)
+        @foreach (var item in Model.Products.ProductModels)
         {
             <tr>
                 <td width="40%">
@@ -68,11 +65,42 @@
                 </td>
             </tr>
         }
-@*         @{
-            var prevDisabled = !Model.HasP ? "disabled":"";
-            var nextDisabled = !Model.HasP ? "disabled" : "";
-        }
-        <a asp-action="Index" asp-route-pageNumber="@(Model.pageIndex-1)" class="btn btn-default" @prevDisabled>Previous</a>
-        <a asp-action="Index" asp-route-pageNumber="@(Model.pageIndex-1)" class="btn btn-default" @nextDisabled> Next</a> *@
+
     </tbody>
 </table>
+<div>
+    <ul class="pagination">
+        @if (Model.Products.HasPreviousPage)
+        {
+            <li class="page-item">
+
+                <a class="page-link" asp-page="Index" asp-route-pageIndex="@(Model.Products.CurrentPage - 1)">&laquo;</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item disabled">
+                <a class="page-link" href="#">&laquo;</a>
+            </li>
+        }
+        @for (int i = 1; i <= Model.Products.TotalPage; i++)
+        {
+            <li class="page-item @(i == Model.Products.PageIndex +1 ? "active" : "")">
+                <a class="page-link" asp-page="Index" asp-route-pageIndex="@i">@i </a>
+            </li>
+        }
+        @if (Model.Products.HasNextPage)
+        {
+            <li class="page-item">
+
+                <a class="page-link" asp-page="Index" asp-route-pageIndex="@(Model.Products.CurrentPage==0?Model.Products.CurrentPage +2 :Model.Products.CurrentPage + 1)">&raquo;</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item disabled">
+                <a class="page-link" href="#">&raquo;</a>
+            </li>
+        }
+    </ul>
+</div>

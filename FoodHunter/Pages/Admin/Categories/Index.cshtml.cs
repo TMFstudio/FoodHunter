@@ -18,15 +18,17 @@ namespace FoodHunter.Admin.Categories
         }
         public async Task OnGet(int pageindex)
         {
-          var categories= await _categoryService.GetCategoriesAsync(pageIndex: pageindex , pageSize: 3);
+          var categories= await _categoryService.GetAllCategoriesAsync(pageIndex: pageindex -1, pageSize: 5);
            
             var model=   categories.Select(category =>
             {
                 var m = category.ToModel();
                 return m;
             }).ToList();
+           
             Categories.categoryModels = model;
-          Categories.PageIndex= categories.PageIndex;
+           Categories.PageIndex= categories.PageIndex;
+           Categories.CurrentPage = pageindex;
             Categories.TotalPage= categories.TotalPages;
         }
         public async Task<IActionResult> OnPostAsync(int id)

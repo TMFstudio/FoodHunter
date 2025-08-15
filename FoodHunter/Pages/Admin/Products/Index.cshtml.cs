@@ -4,6 +4,7 @@ using Service.Interfaces;
 using FoodHunter.Model;
 using FoodHunter.Mapper;
 using Core.Models;
+using Service.Services;
 
 namespace FoodHunter.Pages.Admin.Products
 {
@@ -11,22 +12,28 @@ namespace FoodHunter.Pages.Admin.Products
     {
         private readonly IProductService _productService;
         private readonly IProductTypeService _productTypeService;
-        public IEnumerable<ProductModel> Products { get; set; } = default!;
+        public ProductListModel Products { get; set; } = new ProductListModel();
 
         public IndexModel(IProductService productService, IProductTypeService productTypeService)
         {
             _productService = productService;
             _productTypeService  = productTypeService;
         }
-
-        public async Task OnGetAsync()
+        public async Task OnGet(int pageindex)
         {
-            var entity = await _productService.GetAllProductsAsync();
+            var products = await _productService.GetAllProductsAsync(pageIndex: pageindex - 1, pageSize: 2);
 
-               if(entity != null) 
-                Products= entity.ToModelList();
-    ;
+            Products.ProductModels = products.Select(product =>
+            {
+                var m = product.ToModel();
+                return m;
+            }).ToList();
+
+            Products.PageIndex = products.PageIndex;
+            Products.CurrentPage = pageindex;
+            Products.TotalPage = products.TotalPages;
         }
+
         public async Task<IActionResult> OnPostAsync(int id)
         {
             if (id != 0)
