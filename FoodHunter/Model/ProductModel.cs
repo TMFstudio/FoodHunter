@@ -8,7 +8,7 @@ namespace FoodHunter.Model
     {
         public ProductModel()
         {
-            ProductType = new List<SelectListItem>();
+            ProductTypes = new List<SelectListItem>();
 
         }
         [BindProperty]
@@ -29,7 +29,7 @@ namespace FoodHunter.Model
         [BindProperty]
         public double Price { get; set; }
         [BindProperty]
-        public IList<SelectListItem>? ProductType { get; set; }
+        public IList<SelectListItem>? ProductTypes { get; set; }
         [BindProperty]
         public int DisplayOrder { get; set; }
 

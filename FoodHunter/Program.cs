@@ -1,21 +1,23 @@
-using Data;
 using Data.Repository;
 using Microsoft.EntityFrameworkCore;
 using Service.Interfaces;
 using Service.Services;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
-builder.Services.AddDbContext<ApplicationDbContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<Data.DataAccess.ApplicationDbContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<IProductTypeService, ProductTypeService>();
-builder.Services.AddScoped<IProductsCategoriesService, ProductsCategoriesService>();
+builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<Data.DataAccess.ApplicationDbContext>();
+
+builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddTransient<ICategoryService, CategoryService>();
+builder.Services.AddTransient<IProductService, ProductService>();
+builder.Services.AddTransient<IProductTypeService, ProductTypeService>();
+builder.Services.AddTransient<IProductsCategoriesService, ProductsCategoriesService>();
 
 var app = builder.Build();
 
@@ -32,6 +34,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();

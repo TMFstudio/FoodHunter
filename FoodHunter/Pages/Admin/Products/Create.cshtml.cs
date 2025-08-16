@@ -17,7 +17,7 @@ namespace FoodHunter.Pages.Admin.Products
         private readonly IProductService _productService;
         private readonly IProductTypeService _productTypeService;
         private readonly IWebHostEnvironment _hostEnvironment;
-        public ProductModel Product { get; set; } = default!;
+        public ProductModel Product { get; set; } = new ProductModel();
 
 
         public CreateModel(IProductService productService,
@@ -34,7 +34,7 @@ namespace FoodHunter.Pages.Admin.Products
             var products = await _productTypeService.GetAllProductTypesAsync();
             Product = new ProductModel
             {
-                ProductType = products.Select(item => new SelectListItem
+                ProductTypes = products.Select(item => new SelectListItem
                 {
                     Text = item.Name,
                     Value = item.Id.ToString()
@@ -44,7 +44,7 @@ namespace FoodHunter.Pages.Admin.Products
 
         public async Task<IActionResult> OnGet()
         {
-          await  PrepareProductCategory();
+            await PrepareProductCategory();
             return Page();
         }
 
@@ -54,24 +54,24 @@ namespace FoodHunter.Pages.Admin.Products
             {
                 string webRootPath = _hostEnvironment.WebRootPath;
                 var files = HttpContext.Request.Form.Files;
-                   if( Product.Image!=null)
+                if (files.Count != 0 && files!=null)
+                {
+                    //Create
+                    string fileName = Guid.NewGuid().ToString();
+                    var uploads = Path.Combine(webRootPath, @"images\ProductItems");
+                    var extenstion = Path.GetExtension(files[0].FileName);
+                    using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extenstion), FileMode.Create))
                     {
-                        //Create
-                        string fileName = Guid.NewGuid().ToString();
-                        var uploads = Path.Combine(webRootPath, @"images\ProductItems");
-                        var extenstion = Path.GetExtension(files[0].FileName);
-                        using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extenstion), FileMode.Create))
-                        {
-                            files[0].CopyTo(fileStream);
-                        }
-                        Product.Image = @"\images\product\" + fileName + extenstion;
-                    }                   
-                   var entity= Product.ToEntity();
-                   await _productService.InsertProductAsync(entity);
-                    return RedirectToPage("Index");
+                        files[0].CopyTo(fileStream);
+                    }
+                    Product.Image = @"\Images\ProductItems\" + fileName + extenstion;
+                }
+
+                var entity = Product.ToEntity();
+                await _productService.InsertProductAsync(entity);
+                return RedirectToPage("Index");
             }
 
-          await  PrepareProductCategory();
             return Page();
         }
     }

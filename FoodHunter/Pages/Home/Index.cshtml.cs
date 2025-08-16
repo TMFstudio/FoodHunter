@@ -14,7 +14,7 @@ namespace FoodHunter.Pages.Home
         private readonly ICategoryService _categoryService;
         private readonly IProductService _productService;
         private readonly IProductTypeService _productTypeService;
-        public HomeModel hompageModel { get; set; } = new HomeModel();
+        public HomeModel HompageModel { get; set; } = new HomeModel();
         public IndexModel(ICategoryService categoryService, IProductService productService, IProductTypeService productTypeService)
         {
             _categoryService = categoryService;
@@ -28,8 +28,8 @@ namespace FoodHunter.Pages.Home
             var products = await _productService.GetAllProductsAsync();
             var productTypes = await _productTypeService.GetAllProductTypesAsync();
 
-            hompageModel.Categories = categories.Select(x=>x.ToModel()).ToList();
-            hompageModel.Products = products.Select(x => x.ToModel()).ToList();
+            HompageModel.Categories = categories.Select(x=>x.ToModel()).ToList();
+            HompageModel.Products = products.Select(x => x.ToModel()).ToList();
             //model.ProductTypes = productTypes;
            
         }
