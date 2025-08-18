@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Service.Interfaces;
 using Service.Services;
 using Microsoft.AspNetCore.Identity;
+using Core.Models;
+using Data.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +13,17 @@ builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
 builder.Services.AddDbContext<Data.DataAccess.ApplicationDbContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<Data.DataAccess.ApplicationDbContext>();
+
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(option =>
+{
+    option.Password.RequireDigit = true;
+    option.Password.RequireLowercase = true;
+    option.Password.RequiredLength = 6;
+    //option.User.RequireUniqueEmail = true;
+    option.SignIn.RequireConfirmedPhoneNumber = false;
+    option.SignIn.RequireConfirmedEmail = false;
+    option.SignIn.RequireConfirmedAccount = false;
+}).AddEntityFrameworkStores<Data.DataAccess.ApplicationDbContext>().AddDefaultTokenProviders();
 
 builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddTransient<ICategoryService, CategoryService>();
@@ -21,6 +33,7 @@ builder.Services.AddTransient<IProductsCategoriesService, ProductsCategoriesServ
 
 var app = builder.Build();
 
+await SeedService.SeedDatabase(app.Services);
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

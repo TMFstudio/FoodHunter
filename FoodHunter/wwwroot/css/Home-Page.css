@@ -470,7 +470,16 @@ nav {
     color: white;
     text-align: center;
 }
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
 
+.dropdown-toggle::after {
+    vertical-align: middle;
+}
 .offer-content {
     max-width: 800px;
     margin: 0 auto;

@@ -1,22 +1,22 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Service.Interfaces;
 using FoodHunter.Mapper;
 using FoodHunter.Model;
-using Service.Interfaces;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Service.Services;
-using Core.Models;
-using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FoodHunter.Pages.Admin.ProductsCategories
 {
     [BindProperties]
-    public class CreateModel : PageModel
+    [Authorize]
+    public class UpdateModel : PageModel
     {
         private readonly IProductsCategoriesService _productsCategoriesService;
         public ProductCategoryModel ProductCategory { get; set; } = default!;
-        public CreateModel(IProductsCategoriesService productsCategoriesService)
+
+        public UpdateModel(IProductsCategoriesService  productsCategoriesService)
         {
             _productsCategoriesService = productsCategoriesService;
         }
@@ -39,12 +39,23 @@ namespace FoodHunter.Pages.Admin.ProductsCategories
             };
         }
 
-        public async Task<IActionResult> OnGet()
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
-            await PrepareProductCategory();
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var product = await _productsCategoriesService.GetProductCategoryAsync(id.Value);
+            if (product == null)
+            {
+                return NotFound();
+            }
+          await  PrepareProductCategory();
+
+
             return Page();
         }
-
+        
         public async Task<IActionResult> OnPostAsync()
         {
             var isProductCategoryExist = await _productsCategoriesService.CheckProductCategoryExistenceAsync(ProductCategory.CategoryId, ProductCategory.ProductId);
@@ -52,16 +63,22 @@ namespace FoodHunter.Pages.Admin.ProductsCategories
             {
                 ModelState.AddModelError(string.Empty, "This Relation Exist");
             }
-            if (ModelState.IsValid )
+            if (!ModelState.IsValid)
             {
-       
-                var entity = ProductCategory.ToEntity();
-                await _productsCategoriesService.InsertProductCategoryAsync(entity);
-                return RedirectToPage("Index");
+                var entity = await _productsCategoriesService.GetProductCategoryAsync(ProductCategory.Id);
+                if (entity == null)
+                {
+                    return NotFound();
+                }
+                entity = ProductCategory.ToEntity();
+                return RedirectToPage("./Index");
+
             }
 
             await PrepareProductCategory();
             return Page();
         }
+
+    
     }
 }

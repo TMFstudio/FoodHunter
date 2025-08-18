@@ -1,0 +1,563 @@
+﻿@page
+@model FoodHunter.Areas.Identity.Pages.Index1Model
+@{
+
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodStore Admin</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-light: #6366f1;
+            --secondary: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            color: var(--dark);
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: white;
+            box-shadow: 1px 0 10px rgba(0,0,0,0.05);
+            padding: 1.5rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0 1.5rem 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 1.5rem;
+        }
+
+            .logo h1 {
+                font-size: 1.25rem;
+                font-weight: 600;
+                color: var(--primary);
+            }
+
+        .nav-menu {
+            padding: 0 1rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.25rem;
+            color: var(--dark);
+            text-decoration: none;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+            .nav-item:hover, .nav-item.active {
+                background-color: var(--primary-light);
+                color: white;
+            }
+
+            .nav-item i {
+                width: 24px;
+                text-align: center;
+            }
+
+        /* Dropdown */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-toggle::after {
+            content: '\f078';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            margin-left: auto;
+            font-size: 0.75rem;
+            transition: transform 0.2s;
+        }
+
+        .dropdown.active .dropdown-toggle::after {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            display: none;
+            padding-left: 1.5rem;
+            margin-top: 0.25rem;
+        }
+
+        .dropdown.active .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+
+            .dropdown-item:hover {
+                background-color: #e2e8f0;
+                color: var(--primary);
+            }
+
+        /* Main Content */
+        .main {
+            padding: 1.5rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+            .header h2 {
+                font-size: 1.5rem;
+                font-weight: 600;
+            }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Stats Cards */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .stat-card {
+            display: flex;
+            flex-direction: column;
+        }
+
+            .stat-card h3 {
+                font-size: 0.875rem;
+                color: var(--gray);
+                margin-bottom: 0.5rem;
+                font-weight: 500;
+            }
+
+            .stat-card .value {
+                font-size: 1.5rem;
+                font-weight: 700;
+                margin-bottom: 0.25rem;
+            }
+
+            .stat-card .change {
+                font-size: 0.75rem;
+                color: var(--secondary);
+                display: flex;
+                align-items: center;
+                gap: 0.25rem;
+            }
+
+        /* Recent Orders */
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        table {
+            width: 100%;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            font-weight: 600;
+            color: var(--gray);
+            font-size: 0.875rem;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+            .status.pending {
+                background: #fef3c7;
+                color: #d97706;
+            }
+
+            .status.completed {
+                background: #d1fae5;
+                color: #059669;
+            }
+
+            .status.cancelled {
+                background: #fee2e2;
+                color: #dc2626;
+            }
+
+        .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--gray);
+            font-size: 1rem;
+        }
+
+            .action-btn:hover {
+                color: var(--primary);
+            }
+
+        .action-menu {
+            position: relative;
+            display: inline-block;
+        }
+
+        .action-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            background: white;
+            min-width: 160px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 0.5rem;
+            z-index: 1;
+        }
+
+        .action-menu:hover .action-dropdown {
+            display: block;
+        }
+
+        .action-dropdown a {
+            display: block;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            color: var(--dark);
+            font-size: 0.875rem;
+        }
+
+            .action-dropdown a:hover {
+                background: #f1f5f9;
+                color: var(--primary);
+            }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fas fa-utensils" style="color: var(--primary); font-size: 1.5rem;"></i>
+                <h1>FoodStore Admin</h1>
+            </div>
+
+            <div class="nav-menu">
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Dashboard
+                </a>
+
+                <!-- Products Dropdown -->
+                <div class="dropdown">
+                    <a href="#" class="nav-item dropdown-toggle">
+                        <i class="fas fa-shopping-bag"></i>
+                        Products
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item">All Products</a>
+                        <a href="#" class="dropdown-item">Add New</a>
+                        <a href="#" class="dropdown-item">Inventory</a>
+                        <a href="#" class="dropdown-item">Reviews</a>
+                    </div>
+                </div>
+
+                <!-- Categories Dropdown -->
+                <div class="dropdown">
+                    <a href="#" class="nav-item dropdown-toggle">
+                        <i class="fas fa-list-alt"></i>
+                        Categories
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item">All Categories</a>
+                        <a href="#" class="dropdown-item">Add New</a>
+                        <a href="#" class="dropdown-item">Manage</a>
+                    </div>
+                </div>
+
+                <!-- Orders Dropdown -->
+                <div class="dropdown">
+                    <a href="#" class="nav-item dropdown-toggle">
+                        <i class="fas fa-truck"></i>
+                        Orders
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item">All Orders</a>
+                        <a href="#" class="dropdown-item">Pending</a>
+                        <a href="#" class="dropdown-item">Completed</a>
+                        <a href="#" class="dropdown-item">Cancelled</a>
+                    </div>
+                </div>
+
+                <!-- Users Dropdown -->
+                <div class="dropdown">
+                    <a href="#" class="nav-item dropdown-toggle">
+                        <i class="fas fa-users"></i>
+                        Users
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item">All Users</a>
+                        <a href="#" class="dropdown-item">Add New</a>
+                        <a href="#" class="dropdown-item">Admins</a>
+                        <a href="#" class="dropdown-item">Customers</a>
+                    </div>
+                </div>
+
+                <a href="#" class="nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    Analytics
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main">
+            <div class="header">
+                <h2>Dashboard</h2>
+                <div class="user-menu">
+                    <i class="fas fa-bell" style="color: var(--gray);"></i>
+                    <div class="avatar">AD</div>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats">
+                <div class="card stat-card">
+                    <h3>Today's Orders</h3>
+                    <div class="value">142</div>
+                    <div class="change">
+                        <i class="fas fa-arrow-up"></i>
+                        12% from yesterday
+                    </div>
+                </div>
+
+                <div class="card stat-card">
+                    <h3>Revenue</h3>
+                    <div class="value">$3,845</div>
+                    <div class="change">
+                        <i class="fas fa-arrow-up"></i>
+                        8% from yesterday
+                    </div>
+                </div>
+
+                <div class="card stat-card">
+                    <h3>Active Customers</h3>
+                    <div class="value">1,024</div>
+                    <div class="change">
+                        <i class="fas fa-arrow-up"></i>
+                        5% from yesterday
+                    </div>
+                </div>
+
+                <div class="card stat-card">
+                    <h3>Popular Items</h3>
+                    <div class="value">Pizza Margherita</div>
+                    <div class="change">
+                        48 orders today
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Orders -->
+            <h3 class="section-title">Recent Orders</h3>
+            <div class="card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Items</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#ORD-7841</td>
+                            <td>John Smith</td>
+                            <td>3</td>
+                            <td>$42.50</td>
+                            <td><span class="status completed">Completed</span></td>
+                            <td>
+                                <div class="action-menu">
+                                    <button class="action-btn">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                    <div class="action-dropdown">
+                                        <a href="#">View Details</a>
+                                        <a href="#">Edit</a>
+                                        <a href="#">Cancel</a>
+                                        <a href="#">Print Invoice</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#ORD-7840</td>
+                            <td>Sarah Johnson</td>
+                            <td>2</td>
+                            <td>$28.75</td>
+                            <td><span class="status pending">Pending</span></td>
+                            <td>
+                                <div class="action-menu">
+                                    <button class="action-btn">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                    <div class="action-dropdown">
+                                        <a href="#">View Details</a>
+                                        <a href="#">Edit</a>
+                                        <a href="#">Cancel</a>
+                                        <a href="#">Print Invoice</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#ORD-7839</td>
+                            <td>Michael Brown</td>
+                            <td>5</td>
+                            <td>$65.20</td>
+                            <td><span class="status completed">Completed</span></td>
+                            <td>
+                                <div class="action-menu">
+                                    <button class="action-btn">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                    <div class="action-dropdown">
+                                        <a href="#">View Details</a>
+                                        <a href="#">Edit</a>
+                                        <a href="#">Cancel</a>
+                                        <a href="#">Print Invoice</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#ORD-7838</td>
+                            <td>Emily Davis</td>
+                            <td>1</td>
+                            <td>$12.99</td>
+                            <td><span class="status cancelled">Cancelled</span></td>
+                            <td>
+                                <div class="action-menu">
+                                    <button class="action-btn">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                    <div class="action-dropdown">
+                                        <a href="#">View Details</a>
+                                        <a href="#">Edit</a>
+                                        <a href="#">Cancel</a>
+                                        <a href="#">Print Invoice</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle dropdown menus
+        document.querySelectorAll('.dropdown-toggle').forEach(item => {
+            item.addEventListener('click', function (e) {
+                e.preventDefault();
+                const parent = this.parentElement;
+                parent.classList.toggle('active');
+
+                // Close other dropdowns
+                document.querySelectorAll('.dropdown').forEach(dropdown => {
+                    if (dropdown !== parent) {
+                        dropdown.classList.remove('active');
+                    }
+                });
+            });
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('.dropdown')) {
+                document.querySelectorAll('.dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

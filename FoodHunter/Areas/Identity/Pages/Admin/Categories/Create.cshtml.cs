@@ -1,6 +1,7 @@
 
 using FoodHunter.Mapper;
 using FoodHunter.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Service.Interfaces;
@@ -9,6 +10,7 @@ namespace FoodHunter.Admin.Categories
 {
 
     [BindProperties]
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly ICategoryService _categoryService;

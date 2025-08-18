@@ -5,9 +5,11 @@ using FoodHunter.Model;
 using FoodHunter.Mapper;
 using Service.Interfaces;
 using Core;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FoodHunter.Admin.Categories
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly ICategoryService _categoryService;

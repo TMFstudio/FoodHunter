@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Service.Interfaces;
 using FoodHunter.Model;
 using FoodHunter.Mapper;
-using Core.Models;
-using Service.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FoodHunter.Pages.Admin.Products
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly IProductService _productService;

@@ -10,10 +10,12 @@ using Core.Models;
 using Service.Interfaces;
 using FoodHunter.Mapper;
 using FoodHunter.Model;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FoodHunter.Pages.Admin.ProductsType
 {
     [BindProperties]
+    [Authorize]
     public class UpdateModel : PageModel
     {
         private readonly IProductTypeService  _productTypeService;

@@ -3,10 +3,12 @@ using Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using FoodHunter.Mapper;
 using FoodHunter.Model;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FoodHunter.Pages.Admin.ProductsCategories
 {
     [BindProperties]
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly IProductsCategoriesService  _productsCategoriesService;
