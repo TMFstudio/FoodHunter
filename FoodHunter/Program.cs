@@ -33,6 +33,7 @@ builder.Services.ConfigureApplicationCookie(option =>
 });
 builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddTransient<ICategoryService, CategoryService>();
+builder.Services.AddTransient<ICustomerService, CustomerService>();
 builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<IProductTypeService, ProductTypeService>();
 builder.Services.AddTransient<IProductsCategoriesService, ProductsCategoriesService>();

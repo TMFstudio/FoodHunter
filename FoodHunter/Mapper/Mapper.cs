@@ -125,5 +125,46 @@ namespace FoodHunter.Mapper
 
 
         #endregion
+
+        #region ProductType
+        public static CustomerModel ToModel(this Customer customer)
+        {
+            return new CustomerModel
+            {
+                Id = customer.Id,
+                FirstName = customer.FirstName,
+                LastName = customer.LastName,
+                //not create mabe later !!!!
+                CreatedOn = customer.CreatedOn,
+                Email = customer.Email,
+                IsActive = customer.IsActive,
+                PhoneNumber = customer.PhoneNumber,
+                UserName = customer.UserName,
+                EmailConfirmed = customer.EmailConfirmed
+            };
+        }
+
+        public static IEnumerable<CustomerModel> ToModelList(this IEnumerable<Customer> customers)
+        {
+            return customers.Select(x => x.ToModel()).ToList();
+        }
+        public static Customer ToEntity(this CustomerModel customer)
+        {
+            return new Customer
+            {
+                Id = customer.Id,
+                FirstName = customer.FirstName,
+                LastName = customer.LastName,
+                //not create mabe later !!!!
+                CreatedOn = customer.CreatedOn,
+                Email = customer.Email,
+                IsActive = customer.IsActive,
+                PhoneNumber = customer.PhoneNumber,
+                UserName = customer.UserName,
+                EmailConfirmed = customer.EmailConfirmed
+            };
+        }
+
+        #endregion
     }
 }
