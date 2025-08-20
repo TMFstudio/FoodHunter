@@ -30,7 +30,6 @@ namespace Service.Services
         public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
         {
             return await _CategoryRepository.GetAllAsync();
-
         }
 
         public async Task<IEnumerable<Product>> GetAllProductAsync()
@@ -38,14 +37,21 @@ namespace Service.Services
             return await _ProductRepository.GetAllAsync();
         }
 
-        public virtual async Task<IEnumerable<ProductCategory>> GetAllProductsCategoriesAsync()
+        public virtual async Task<IEnumerable<ProductCategory>> GetAllProductsCategoriesAsync(int? productId=0,int? categoryId = 0)
         {
-            var entity = _ProductCategoryRepository.Table.Include(x => x.Category)
-                .Include(x => x.Product);
-            return await entity.ToListAsync();
+            var query = _ProductCategoryRepository.Table;
+
+            //bring categories with productids
+            if (productId != 0) 
+                 query=   query.Where(x=>x.ProductId==productId).Include(x=>x.Category);
+            //bring categories with categoryids
+            if (categoryId != 0) 
+                 query=   query.Where(x=>x.CategoryId==categoryId).Include(x => x.Product);
+
+            return await query.ToListAsync();
         }
 
-        public virtual async Task<ProductCategory> GetProductCategoryAsync(int id, int? categoryId = 0, int? ProductId = 0)
+        public virtual async Task<ProductCategory> GetProductCategoryAsync(int id, int? categoryId = 0, int? productId = 0)
         {
             return await _ProductCategoryRepository.GetByIdAsync(id);
         }
@@ -60,10 +66,10 @@ namespace Service.Services
         {
             await _ProductCategoryRepository.UpdateAsync(product);
         }
-        public virtual async Task<bool> CheckProductCategoryExistenceAsync(int categoryId, int ProductId)
+        public virtual async Task<bool> CheckProductCategoryExistenceAsync(int categoryId, int productId)
         {
             var query =  _ProductCategoryRepository.Table;
-            return await query.AnyAsync(x => x.CategoryId == categoryId && x.ProductId == ProductId); 
+            return await query.AnyAsync(x => x.CategoryId == categoryId && x.ProductId == productId); 
         }
     }
 }

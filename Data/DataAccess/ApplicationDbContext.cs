@@ -1,6 +1,5 @@
 ﻿
 using Core.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +13,9 @@ namespace Data.DataAccess
         }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ApplicationUser> Users { get; set; }
+
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<ProductCategory> ProductsCategories { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<ApplicationUser>  ApplicationUser { get; set; }

@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Core.Models
+@using Microsoft.AspNetCore.Identity
+<!DOCTYPE html>
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -14,6 +18,7 @@
 <body>
     <!-- Header with Dropdown -->
     <header>
+
         <div class="container header-container">
             <a asp-page="/Index" class="logo">
                 <i class="fas fa-utensils"></i>
@@ -42,7 +47,7 @@
 
                 <Partial name="_loginpartial" />
 
-  
+
                 <div class="mobile-menu-btn" id="mobile-menu-btn">
                     <i class="fas fa-bars"></i>
                 </div>

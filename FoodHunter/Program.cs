@@ -24,7 +24,13 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(option =>
     option.SignIn.RequireConfirmedEmail = false;
     option.SignIn.RequireConfirmedAccount = false;
 }).AddEntityFrameworkStores<Data.DataAccess.ApplicationDbContext>().AddDefaultTokenProviders();
-
+builder.Services.ConfigureApplicationCookie(option =>
+{
+    option.LoginPath = "/Identity/Pages/Account/Login";
+    option.LogoutPath = "/Identity/Pages/Account/Logout";
+    option.AccessDeniedPath = "/Identity/Pages/Account/AccessDeneied";
+    
+});
 builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddTransient<IProductService, ProductService>();

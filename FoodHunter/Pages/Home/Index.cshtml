@@ -1,15 +1,28 @@
 ﻿@page
+@using Core.Models
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 @model FoodHunter.Pages.Home.IndexModel
 @{
 }
 <!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FreshBites - Food Store</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+@if (SignInManager.IsSignedIn(User))
+{
+    if (User.IsInRole("owner") || User.IsInRole("admin"))
+    {
+        <div class="container header-container">
+            <a class="btn btn-dark w-100" asp-area="Identity" asp-page="/Admin/Dashboard"><i class="fas fa-cog me-2"></i> Admin Panel</a>
+        </div>
+    }
+
+}
 <body>
 
     <!-- Hero Section -->
@@ -122,9 +135,9 @@
                                         (128)
                                     </span>
                                 </div>
-                                <button class="add-to-cart">
+                                <a asp-page="ProductDetail" asp-route-id="@item.Id" class="btn btn-primary add-to-cart">
                                     <i class="fas fa-shopping-cart"></i> Add to Cart
-                                </button>
+                                </a>
                             </div>
                         </div>
 
@@ -334,4 +347,3 @@
         });
     </script>
 </body>
-</html>

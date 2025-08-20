@@ -21,7 +21,7 @@ namespace FoodHunter.Pages.Admin.Products
         }
         public async Task OnGet(int pageindex)
         {
-            var products = await _productService.GetAllProductsAsync(pageIndex: pageindex - 1, pageSize: 2);
+            var products = await _productService.GetAllProductsAsync(pageIndex: pageindex - 1, pageSize: 6);
 
             Products.ProductModels = products.Select(product =>
             {

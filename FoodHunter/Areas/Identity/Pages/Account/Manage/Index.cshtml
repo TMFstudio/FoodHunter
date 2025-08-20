@@ -2,24 +2,17 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Profile";
-    Layout = "/Pages/Shared/_Layout.cshtml";
+    Layout = "/Areas/Identity/Pages/Account/Manage/_Layout.cshtml";
 }
 
 <br />
 
 <h2>@ViewData["Title"]</h2>
 <partial name="_StatusMessage" for="StatusMessage" />
+<h2>Change your account settings</h2>
 
 <div>
-    <h2>Change your account settings</h2>
-    <hr />
-    <br />
-
     <div class="row">
-        <div class="col-md-3">
-            <partial name="_ManageNav" />
-        </div>
-        <div class="col-md-9">
             <div class="row">
                 <div class="col-md-6">
                     <form id="profile-form" method="post">
@@ -37,8 +30,7 @@
                     </form>
                 </div>
             </div>
-        </div>
-    </div>
+   </div>
 </div>
 
 

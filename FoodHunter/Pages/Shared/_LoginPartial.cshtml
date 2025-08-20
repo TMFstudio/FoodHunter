@@ -14,14 +14,14 @@
             <span class="d-none d-sm-inline">Profile</span>
         </button>
 
-        <ul class="dropdown-menu dropdown-menu-end" >
+        <ul class="dropdown-menu dropdown-menu-end">
             @if (SignInManager.IsSignedIn(User))
             {
                 if (User.IsInRole("owner"))
                 {
                     <li>
                         <div class="d-flex align-items-center px-3 py-2">
-                            <img src="" alt="User" class="user-avatar me-3">
+                            <img src="\Default\DefaultProfile.jpg" alt="User" class="user-avatar me-3">
                             <div>
                                 <h6 class="mb-0">Owner</h6>
                                 <small class="text-muted">@UserManager.GetUserName(User)</small>
@@ -33,7 +33,7 @@
                 {
                     <li>
                         <div class="d-flex align-items-center px-3 py-2">
-                            <img src="" alt="User" class="user-avatar me-3">
+                            <img src="\Default\DefaultProfile.jpg" alt="User" class="user-avatar me-3">
                             <div>
                                 <h6 class="mb-0">Admin</h6>
                                 <small class="text-muted">@UserManager.GetUserName(User)</small>
@@ -45,7 +45,7 @@
                 {
                     <li>
                         <div class="d-flex align-items-center px-3 py-2">
-                            <img src="" alt="User" class="user-avatar me-3">
+                            <img src="\Default\DefaultProfile.jpg" alt="User" class="user-avatar me-3">
                             <div>
                                 <h6 class="mb-0">client</h6>
                                 <small class="text-muted">@UserManager.GetUserName(User)</small>
@@ -56,29 +56,39 @@
 
                 <li><hr class="dropdown-divider"></li>
                 <li> <a id="manage" class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><i class="fas fa-user me-2"></i> Profile </a></li>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    if (User.IsInRole("owner") || User.IsInRole("admin"))
+                    {
+                       <li>
+                            <a class="dropdown-item" asp-area="Identity" asp-page="/Admin/Dashboard"><i class="fas fa-cog me-2"></i> Admin Panel</a>
+                        </li>
+                    }
+
+                }
                 <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i> Settings</a></li>
                 <li><a class="dropdown-item" href="#"><i class="fas fa-question-circle me-2"></i> Help</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li>
                     <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
                         <button id="logout" type="submit" class="dropdown-item text-danger">  <i class="fas fa-sign-out-alt me-2"></i>Logout</button>
-                        </form>
+                    </form>
                 </li>
             }
             else
             {
-                    <li class="px-3 py-2">
-                        <h6 class="mb-0">Guest User</h6>
-                        <small class="text-muted">Not logged in</small>
-                    </li>
-                    <li><hr class="dropdown-divider"></li>
-                <li>   <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login"><i class="bi bi-box-arrow-in-right me-2"></i>Login</a></li>
+                <li class="d-flex align-items-center px-3 py-2">
+                    <h6 class="mb-0">Guest User</h6>
+                    <small class="text-muted">Not logged in</small>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li>   <a id="manage" class="dropdown-item" id="login" asp-area="Identity" asp-page="/Account/Login"><i class="bi bi-box-arrow-in-right me-2"></i>Login</a></li>
                 <li>
-                    <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register"><i class="bi bi-person-plus me-2"></i>Register</a>
+                    <a class="dropdown-item" id="register" asp-area="Identity" asp-page="/Account/Register"><i class="bi bi-person-plus me-2"></i>Register</a>
 
                 </li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#"><i class="bi bi-question-circle me-2"></i>Help</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#"><i class="bi bi-question-circle me-2"></i>Help</a></li>
             }
         </ul>
 

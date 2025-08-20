@@ -25,6 +25,9 @@
     <thead>
         <tr>
             <th>
+                Image
+            </th>   
+            <th>
                 Product Name
             </th>
             <th>
@@ -45,7 +48,10 @@
         @foreach (var item in Model.Products.ProductModels)
         {
             <tr>
-                <td width="40%">
+                <td width="10%">
+                    <image src="@item.Image"  class="user-avatar me-5"></image>
+                </td>
+                <td width="30%">
                     @item.Name
                 </td>
                 <td width="15%">

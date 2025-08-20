@@ -1,0 +1,67 @@
+﻿@page
+@model FoodHunter.Pages.Home.ProductDetailModel
+@{
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Product Detail</title>
+</head>
+<body>
+    <form>
+        <input asp-for="ProductsDetailModel.Id" hidden />
+
+        <div class="container py-5">
+            <div class="row g-4">
+                <!-- Product Image -->
+                <div class="col-md-6 text-center">
+                    <img src="@Model.ProductsDetailModel.Image" class="img-fluid rounded" alt="Product Image">
+                </div>
+
+                <!-- Product Details -->
+                <div class="col-md-6">
+                    <h2 class="fw-bold">@Model.ProductsDetailModel.Name</h2>
+                    <p class="text-muted">@Model.ProductsDetailModel.CreateDate</p>
+                    <h4 class="text-success mb-3">@Model.ProductsDetailModel.Price</h4>
+                    <div class="col-6">
+                        <span class="badge p-2 border text-dark bg-warning"> @Model.ProductsDetailModel.ProductTypeName</span>
+                    </div>
+
+                    <div class="text">
+                        @Model.ProductsDetailModel.Description
+                    </div>
+                    <ul class="list-unstyled">
+
+                        @foreach (var item in Model.ProductsDetailModel.categories)
+                        {
+                            <li><strong>@item.Name:</strong> @item.Description</li>
+                        }
+
+
+                    </ul>
+                    <div class="col-12">
+                        <div class="col-6">
+                            <label asp-for="ProductsDetailModel.ProductCount" class="form-control" />
+                            <input asp-for="ProductsDetailModel.ProductCount" class="form-control" />
+                        </div>
+                        <div class="col-6">
+
+                            <button class="btn btn-primary mt-3">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+
+
+
+
