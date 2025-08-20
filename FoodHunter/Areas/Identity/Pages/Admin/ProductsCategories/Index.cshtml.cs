@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using FoodHunter.Mapper;
 using FoodHunter.Model;
 using Microsoft.AspNetCore.Authorization;
+using Service.Services;
 
 namespace FoodHunter.Pages.Admin.ProductsCategories
 {
@@ -12,17 +13,26 @@ namespace FoodHunter.Pages.Admin.ProductsCategories
     public class IndexModel : PageModel
     {
         private readonly IProductsCategoriesService  _productsCategoriesService;
-        public IEnumerable<ProductCategoryModel> ProductCategory { get; set; } = default!;
+        public ProductCategoryListModel ProductCategory { get; set; } = new ProductCategoryListModel();
 
         public IndexModel(IProductsCategoriesService  productsCategoriesService)
         {
             _productsCategoriesService = productsCategoriesService;
         }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(int pageindex)
         {
-            var entity = await _productsCategoriesService.GetAllProductsCategoriesAsync();
-            ProductCategory = entity.ToModelList();
+            var products = await _productsCategoriesService.GetAllProductsCategoriesAsync(pageindex: pageindex - 1, pageSize: 6);
+
+            ProductCategory.ProductsCategoriesModels = products.Select(product =>
+            {
+                var m = product.ToModel();
+                return m;
+            }).ToList();
+
+            ProductCategory.PageIndex = products.PageIndex;
+            ProductCategory.CurrentPage = pageindex;
+            ProductCategory.TotalPage = products.TotalPages;
 
         }
         public async Task<IActionResult> OnPostAsync(int id)

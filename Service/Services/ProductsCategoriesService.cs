@@ -1,4 +1,5 @@
-﻿using Core.Models;
+﻿using Core;
+using Core.Models;
 using Data.Repository;
 using Microsoft.EntityFrameworkCore;
 using Service.Interfaces;
@@ -37,18 +38,24 @@ namespace Service.Services
             return await _ProductRepository.GetAllAsync();
         }
 
-        public virtual async Task<IEnumerable<ProductCategory>> GetAllProductsCategoriesAsync(int? productId=0,int? categoryId = 0)
+        public virtual async Task<IPagedList<ProductCategory>> GetAllProductsCategoriesAsync(int? productId=0,int? categoryId = 0,
+          int pageIndex = 0,   int pageSize = int.MaxValue)
         {
-            var query = _ProductCategoryRepository.Table;
+            return await _ProductCategoryRepository.GetAllPagedAsync(async query =>
+            {
+                //bring categories with productids
+                if (productId != 0)
+                    query = query.Where(x => x.ProductId == productId).Include(x => x.Category);
+                //bring categories with categoryids
+                if (categoryId != 0)
+                    query = query.Where(x => x.CategoryId == categoryId).Include(x => x.Product);
+               
+                query.OrderByDescending(x => x.Id);
 
-            //bring categories with productids
-            if (productId != 0) 
-                 query=   query.Where(x=>x.ProductId==productId).Include(x=>x.Category);
-            //bring categories with categoryids
-            if (categoryId != 0) 
-                 query=   query.Where(x=>x.CategoryId==categoryId).Include(x => x.Product);
+                return query;
 
-            return await query.ToListAsync();
+            }, pageIndex, pageSize);
+
         }
 
         public virtual async Task<ProductCategory> GetProductCategoryAsync(int id, int? categoryId = 0, int? productId = 0)

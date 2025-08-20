@@ -32,7 +32,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.ProductCategory)
+        @foreach (var item in Model.ProductCategory.ProductsCategoriesModels)
         {
             <tr>
                 <td width="40%">
@@ -51,3 +51,39 @@
         }
     </tbody>
 </table>
+<div id="indexer">
+    <ul class="pagination">
+        @if (Model.ProductCategory.HasPreviousPage)
+        {
+            <li class="page-item">
+
+                <a class="page-link" asp-page="Index" asp-route-pageIndex="@(Model.ProductCategory.CurrentPage - 1)">&laquo;</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item disabled">
+                <a class="page-link" href="#">&laquo;</a>
+            </li>
+        }
+        @for (int i = 1; i <= Model.ProductCategory.TotalPage; i++)
+        {
+            <li class="page-item @(i == Model.ProductCategory.PageIndex +1 ? "active" : "")">
+                <a class="page-link" asp-page="Index" asp-route-pageIndex="@i">@i </a>
+            </li>
+        }
+        @if (Model.ProductCategory.HasNextPage)
+        {
+            <li class="page-item">
+
+                <a class="page-link" asp-page="Index" asp-route-pageIndex="@(Model.ProductCategory.CurrentPage==0?Model.ProductCategory.CurrentPage +2 :Model.ProductCategory.CurrentPage + 1)">&raquo;</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item disabled">
+                <a class="page-link" href="#">&raquo;</a>
+            </li>
+        }
+    </ul>
+</div>
