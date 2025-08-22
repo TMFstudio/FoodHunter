@@ -15,6 +15,7 @@ namespace Service.Services
         {
             _ShoppingCartRepository = shoppingCartrepository;
         }
+
         public async Task DeleteShoppingCartByIdAsync(int id)
         {
             var entity = await _ShoppingCartRepository.GetByIdAsync(id);
@@ -41,6 +42,24 @@ namespace Service.Services
             return await _ShoppingCartRepository.GetByIdAsync(id);
         }
 
+        public async Task<ShoppingCart> GetShoppingCartByIdAsync(int productId, string customerId)
+        {
+            var shoppingCartItems = _ShoppingCartRepository.Table;
+
+            var query =await shoppingCartItems.FirstOrDefaultAsync(query => query.ProductId == productId && query.ApplicationUserId == customerId);
+            return query;
+        }
+
+        public async Task IncreamentCountAsync(ShoppingCart shoppingCartitem, int count)
+        {
+            shoppingCartitem.Count += count;
+            await _ShoppingCartRepository.UpdateAsync(shoppingCartitem);
+        }
+        public async Task DecamentCountAsync(ShoppingCart shoppingCartitem, int count)
+        {
+            shoppingCartitem.Count += count;
+            await _ShoppingCartRepository.UpdateAsync(shoppingCartitem);
+        }
         public async Task InsertShoppingCartAsync(ShoppingCart product)
         {
             await _ShoppingCartRepository.InsertAsync(product);
@@ -50,5 +69,6 @@ namespace Service.Services
         {
             await _ShoppingCartRepository.UpdateAsync(product);
         }
+
     }
 }

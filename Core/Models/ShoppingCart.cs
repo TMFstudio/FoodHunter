@@ -6,8 +6,8 @@ namespace Core.Models
 {
     public class ShoppingCart: BaseEntity
     {
-        public int? Count { get; set; }
-        public int? ProductId { get; set; }
+        public int Count { get; set; }
+        public int ProductId { get; set; }
         [ForeignKey("ProductId")]
         public Product Product { get; set; }
 

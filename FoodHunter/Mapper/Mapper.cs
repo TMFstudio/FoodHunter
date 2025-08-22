@@ -1,6 +1,7 @@
 ﻿using Core;
 using Core.Models;
 using FoodHunter.Model;
+using FoodHunter.Pages.Home;
 
 namespace FoodHunter.Mapper
 {
@@ -126,7 +127,7 @@ namespace FoodHunter.Mapper
 
         #endregion
 
-        #region ProductType
+        #region CustomerModel
         public static CustomerModel ToModel(this Customer customer)
         {
             return new CustomerModel
@@ -162,6 +163,37 @@ namespace FoodHunter.Mapper
                 PhoneNumber = customer.PhoneNumber,
                 UserName = customer.UserName,
                 EmailConfirmed = customer.EmailConfirmed
+            };
+        }
+
+        #endregion
+
+        #region ShoppingCart
+        public static ShoppingCartItemModel ToModel(this ShoppingCart  shoppingCart)
+        {
+            return new ShoppingCartItemModel
+            {
+                Id = shoppingCart.Id,
+                 CustomerId = shoppingCart.ApplicationUserId,
+                 ProductId= shoppingCart.ProductId,
+                CreateOn = shoppingCart.CreateOn,
+                ItemsCount = shoppingCart.Count
+            };
+        }
+
+        public static IEnumerable<ShoppingCartItemModel> ToModelList(this IEnumerable<ShoppingCart> productTypes)
+        {
+            return productTypes.Select(x => x.ToModel()).ToList();
+        }
+        public static ShoppingCart ToEntity(this ShoppingCartItemModel shoppingCart)
+        {
+            return new ShoppingCart
+            {
+                Id = shoppingCart.Id,
+                ApplicationUserId = shoppingCart.CustomerId,
+                ProductId = shoppingCart.ProductId.Value,
+                CreateOn=shoppingCart.CreateOn,
+                Count = shoppingCart.ItemsCount
             };
         }
 

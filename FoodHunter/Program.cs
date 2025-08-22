@@ -26,13 +26,14 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(option =>
 }).AddEntityFrameworkStores<Data.DataAccess.ApplicationDbContext>().AddDefaultTokenProviders();
 builder.Services.ConfigureApplicationCookie(option =>
 {
-    option.LoginPath = "/Identity/Pages/Account/Login";
-    option.LogoutPath = "/Identity/Pages/Account/Logout";
-    option.AccessDeniedPath = "/Identity/Pages/Account/AccessDeneied";
+    option.LoginPath = "/Identity/Account/Login";
+    option.LogoutPath = "/Identity/Account/Logout";
+    option.AccessDeniedPath = "/Identity/Account/AccessDeneied";
     
 });
 builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddTransient<ICategoryService, CategoryService>();
+builder.Services.AddTransient<IShoppingCartService, ShoppingCartService>();
 builder.Services.AddTransient<ICustomerService, CustomerService>();
 builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<IProductTypeService, ProductTypeService>();
