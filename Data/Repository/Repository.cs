@@ -54,6 +54,19 @@ namespace Data.Repository
 
            return await query.FirstOrDefaultAsync(x=>x.Id==id);
         }
+        
+        public virtual async Task<IEnumerable<TEntity>> GetAllsAsync(Expression<Func<TEntity,bool>>? filter = null, Func<IQueryable<TEntity>, Task<IQueryable<TEntity>>> func = null)
+        {
+
+            IQueryable<TEntity> query = Table;
+            
+            query = func != null ? await func(query) : query;
+
+            if (filter != null)
+                query = query.Where(filter);
+
+           return await query.ToListAsync();
+        }
 
 
         public virtual async Task RemoveAsync(TEntity entity)

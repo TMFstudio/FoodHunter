@@ -12,7 +12,7 @@ namespace FoodHunter.Model
         public int ItemsCount { get; set; }
         public int? ProductId  { get; set; }
         public DateTime? CreateOn  { get; set; }
-        public ProductDetailModel? Product { get; set; } = new ProductDetailModel();   
+        public ProductDetailModel? Product { get; set; }= new ProductDetailModel();   
         public string? CustomerId  { get; set; }
         public ApplicationUser? Customer { get; set; }= new ApplicationUser();
     }

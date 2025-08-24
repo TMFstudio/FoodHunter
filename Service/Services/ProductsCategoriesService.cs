@@ -46,10 +46,11 @@ namespace Service.Services
                 //bring categories with productids
                 if (productId != 0)
                     query = query.Where(x => x.ProductId == productId).Include(x => x.Category);
+
                 //bring categories with categoryids
                 if (categoryId != 0)
                     query = query.Where(x => x.CategoryId == categoryId).Include(x => x.Product);
-               
+          
                 query.OrderByDescending(x => x.Id);
 
                 return query;
@@ -58,7 +59,7 @@ namespace Service.Services
 
         }
 
-        public virtual async Task<ProductCategory> GetProductCategoryAsync(int id, int? categoryId = 0, int? productId = 0)
+        public virtual async Task<ProductCategory> GetProductCategoryAsync(int id)
         {
             return await _ProductCategoryRepository.GetByIdAsync(id);
         }

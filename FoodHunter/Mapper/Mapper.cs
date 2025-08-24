@@ -177,7 +177,7 @@ namespace FoodHunter.Mapper
                  CustomerId = shoppingCart.ApplicationUserId,
                  ProductId= shoppingCart.ProductId,
                 CreateOn = shoppingCart.CreateOn,
-                ItemsCount = shoppingCart.Count
+                ItemsCount = shoppingCart.Count,             
             };
         }
 

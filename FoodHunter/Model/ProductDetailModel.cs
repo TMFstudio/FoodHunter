@@ -13,6 +13,6 @@ namespace FoodHunter.Model
         public double Price { get; set; }
         public int DisplayOrder { get; set; }
         public string? ProductTypeName { get; set; }
-        public List<Category> Categories { get; set; }= new List<Category>();
+        public List<CategoryModel> Categories { get; set; }= new List<CategoryModel>();
     }
 }

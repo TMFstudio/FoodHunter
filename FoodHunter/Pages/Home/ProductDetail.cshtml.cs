@@ -10,12 +10,12 @@ namespace FoodHunter.Pages.Home
 {
     [Authorize]
     [BindProperties]
-    public class ProductDetailModel : PageModel
+    public class ProductDetail : PageModel
     {
         private readonly IShoppingCartService _shoppingCartService;
         private readonly IProductService _productService;
         private readonly IProductsCategoriesService _productCategoryService;
-        public ProductDetailModel(IProductService productService, IProductsCategoriesService productCategoryService, IShoppingCartService shoppingCartService)
+        public ProductDetail(IProductService productService, IProductsCategoriesService productCategoryService, IShoppingCartService shoppingCartService)
         {
             _shoppingCartService = shoppingCartService;
             _productService = productService;
@@ -43,7 +43,7 @@ namespace FoodHunter.Pages.Home
             ShoppingCartModel.Product.Image = product.Image;
             ShoppingCartModel.Product.ProductTypeName = product.ProductType.Name;
             var productCategory = await _productCategoryService.GetAllProductsCategoriesAsync(productId: productId);
-            ShoppingCartModel.Product.Categories = productCategory.Select(pc => pc.Category).Distinct().ToList();
+            ShoppingCartModel.Product.Categories = productCategory.Select(pc => pc.Category.ToModel()).Distinct().ToList();
         }
         private void PrepareShoppingCartItemViewModel(int id)
         {
