@@ -73,7 +73,7 @@ namespace FoodHunter.Pages.Home
                 }
                 else
                 {
-                    await _shoppingCartService.IncreamentCountAsync(shoppingCartItem, entity.Count);
+                    await _shoppingCartService.IncreamentCountAsync(shoppingCartItem);
                 }
                 return RedirectToAction("Index", new { id = id } );
             }

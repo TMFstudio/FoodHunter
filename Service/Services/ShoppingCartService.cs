@@ -26,7 +26,7 @@ namespace Service.Services
             {
                 await _ShoppingCartRepository.RemoveAsync(entity);
             }
-        }
+        }  
         public async Task<IPagedList<ShoppingCart>> GetAllShoppingCartAsync(int pageIndex = 0, int pageSize = int.MaxValue)
         {
             return await _ShoppingCartRepository.GetAllPagedAsync(async query =>
@@ -47,14 +47,14 @@ namespace Service.Services
             var query = await shoppingCartItems.FirstOrDefaultAsync(query => query.ProductId == productId && query.ApplicationUserId == customerId);
             return query;
         }
-        public async Task IncreamentCountAsync(ShoppingCart shoppingCartitem, int count)
+        public async Task IncreamentCountAsync(ShoppingCart shoppingCartitem)
         {
-            shoppingCartitem.Count += count;
+            shoppingCartitem.Count += 1;
             await _ShoppingCartRepository.UpdateAsync(shoppingCartitem);
         }
-        public async Task DecamentCountAsync(ShoppingCart shoppingCartitem, int count)
+        public async Task DecrementCountAsync(ShoppingCart shoppingCartitem)
         {
-            shoppingCartitem.Count += count;
+            shoppingCartitem.Count -= 1;
             await _ShoppingCartRepository.UpdateAsync(shoppingCartitem);
         }
         public async Task InsertShoppingCartAsync(ShoppingCart product)

@@ -1,8 +1,10 @@
+using Core.Models;
 using FoodHunter.Mapper;
 using FoodHunter.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.CodeAnalysis;
 using Service.Interfaces;
 using System.Security.Claims;
 
@@ -36,8 +38,8 @@ namespace FoodHunter.Pages.Customer.Cart
                 foreach (var item in cartItem)
                 {
                     ShoppingCartModel.OrderTotal = 0;
-                    ShoppingCartModel.Products.Add( new ProductDetailModel
-                    {
+                    ShoppingCartModel.Products.Add(new ProductDetailModel
+                    { Id = item.ProductId,
                         Name = item.Product.Name,
                         Description = item.Product.Description,
                         CreateDate = item.Product.CreateDate,
@@ -45,7 +47,7 @@ namespace FoodHunter.Pages.Customer.Cart
                         Price = item.Product.Price,
                         ProductTypeId = item.Product.ProductTypeId,
                         Categories = category.Select(x => x.ToModel()).ToList(),
-                        CartItemCount=item.Count
+                        CartItemCount = item.Count
                     });
                    
                        ShoppingCartModel.OrderTotal += item.Product.Price * item.Count;
@@ -54,11 +56,50 @@ namespace FoodHunter.Pages.Customer.Cart
                 }
             }
         }
-        public async Task<IActionResult> OnGet()
+        private async Task<ShoppingCart> FindShoppingCartWithPid(int pid)
+        {
+            var claimIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            return await _shoppingCartService.GetShoppingCartByIdAsync(pid, claim.Value);
+
+        }
+        public async Task<IActionResult> OnGetAsync()
         {
             await PrepareShoppingCart();
 
             return Page();
+        }
+        public async Task<IActionResult> OnPostAsync(int productId)
+        {
+
+            var sp =await FindShoppingCartWithPid(productId);
+            await _shoppingCartService.DeleteShoppingCartByIdAsync(sp.Id);
+
+            return RedirectToPage("/Customer/Cart/Index");
+        }      
+        public async Task<IActionResult> OnPostMinusAsync(int id)
+        {
+          var shoppingCart= await FindShoppingCartWithPid(id);
+            if (shoppingCart!=null &&shoppingCart.Count == 1)
+            {
+             await   _shoppingCartService.DeleteShoppingCartByIdAsync(id);
+            }
+            else
+            {
+             await   _shoppingCartService.DecrementCountAsync(shoppingCart);
+            }
+            return RedirectToPage("/Customer/Cart/Index");
+        }  
+        public async Task<IActionResult> OnPostPlusAsync(int id)
+        {
+
+            var shoppingCart = await FindShoppingCartWithPid(id);
+            if (shoppingCart != null)
+            {
+                await _shoppingCartService.IncreamentCountAsync(shoppingCart);
+
+            }
+            return RedirectToPage("/Customer/Cart/Index");
         }
     }
 }

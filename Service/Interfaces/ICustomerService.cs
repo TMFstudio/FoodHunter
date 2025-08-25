@@ -8,6 +8,8 @@ namespace Service.Interfaces
     public interface ICustomerService
     {
         Task<IPagedList<Customer>> GetUsersAsync(int pageIndex = 0, int pageSize = int.MaxValue);
+        Task<ApplicationUser> GetCustomerById(string id);
+
         //Task<(IdentityResult Result, Guid? UserId)> CreateAsync(UserCreateViewModel model);
         //Task<UserEditViewModel?> GetForEditAsync(Guid id);
         //Task<IdentityResult> UpdateAsync(UserEditViewModel model);

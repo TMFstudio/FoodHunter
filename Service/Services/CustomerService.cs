@@ -49,6 +49,12 @@ namespace Service.Services
             }, pageIndex, pageSize: pageSize);
             
          
+        }    
+        public async Task<ApplicationUser> GetCustomerById(string id)
+        {
+          return await  _userManager.Users.FirstOrDefaultAsync(x => x.Id == id);
+
+          
         }
     
         //// Loads user data for the Edit form (read-only).
