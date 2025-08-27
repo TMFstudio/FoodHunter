@@ -1,5 +1,4 @@
-using Core.Models;
-using Data;
+
 using FoodHunter.Mapper;
 using FoodHunter.Model;
 using Microsoft.AspNetCore.Authorization;
@@ -11,7 +10,7 @@ using Service.Interfaces;
 namespace FoodHunter.Admin.Categories
 {
     [BindProperties]
-    [Authorize]
+    [Authorize(Roles = "admin,owner")]
     public class UpdateModel : PageModel
     {
         private readonly ICategoryService _categoryService;

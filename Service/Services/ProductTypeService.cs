@@ -26,7 +26,7 @@ namespace Service.Services
         }
         public virtual async Task DeleteProductTypeByIdAsync(int id)
         {
-            var entity = await _productTypeRepository.GetByIdAsync(id);
+            var entity = await _productTypeRepository.GetByIdAsync(id:id);
             if (entity != null)
             {
                 await _productTypeRepository.RemoveAsync(entity);
@@ -34,7 +34,7 @@ namespace Service.Services
         }
         public virtual async Task<ProductType> GetProductTypeByIdAsync(int id)
         {
-            return await _productTypeRepository.GetByIdAsync(id);
+            return await _productTypeRepository.GetByIdAsync(id: id);
         }
 
         public virtual async Task InsertProductTypeAsync(ProductType productType)

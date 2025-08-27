@@ -15,7 +15,7 @@ namespace Service.Services
 
         public virtual async Task DeleteCategoryByIdAsync(int id)
         {
-            var entity = await _categoryRepository.GetByIdAsync(id);
+            var entity = await _categoryRepository.GetByIdAsync(id:id);
             if (entity != null)
             {
                 await _categoryRepository.RemoveAsync(entity);
@@ -34,7 +34,7 @@ namespace Service.Services
 
         public virtual async Task<Category> GetCategoryByIdAsync(int id)
         {
-            return await _categoryRepository.GetByIdAsync(id);
+            return await _categoryRepository.GetByIdAsync(id: id);
         }
 
         public virtual async Task InsertCategoryAsync(Category category)

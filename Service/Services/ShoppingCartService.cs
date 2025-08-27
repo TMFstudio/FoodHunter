@@ -20,7 +20,7 @@ namespace Service.Services
         #region CartItem
         public async Task DeleteShoppingCartByIdAsync(int id)
         {
-            var entity = await _ShoppingCartRepository.GetByIdAsync(id);
+            var entity = await _ShoppingCartRepository.GetByIdAsync(id: id);
 
             if (entity != null)
             {
@@ -36,16 +36,20 @@ namespace Service.Services
                 return query;
             }, pageIndex, pageSize);
         }
-        public async Task<ShoppingCart> GetShoppingCartByIdAsync(int id)
+        public async Task<ShoppingCart> GetShoppingCartByIdAsync(string customerId,int? productId=0, int? id=0)
         {
-            return await _ShoppingCartRepository.GetByIdAsync(id);
-        }
-        public async Task<ShoppingCart> GetShoppingCartByIdAsync(int productId, string customerId)
-        {
-            var shoppingCartItems = _ShoppingCartRepository.Table;
+            var query = _ShoppingCartRepository.Table.AsQueryable();
 
-            var query = await shoppingCartItems.FirstOrDefaultAsync(query => query.ProductId == productId && query.ApplicationUserId == customerId);
-            return query;
+                query = query.Where(q => q.ApplicationUserId == customerId);
+
+            if (productId.HasValue && productId.Value > 0)
+                query = query.Where(q => q.ProductId == productId.Value);
+
+            if (id.HasValue && id.Value > 0)
+                query = query.Where(q => q.Id == id.Value);
+
+            return await query.FirstOrDefaultAsync();
+ 
         }
         public async Task IncreamentCountAsync(ShoppingCart shoppingCartitem)
         {
@@ -84,11 +88,14 @@ namespace Service.Services
                 if (CustomerId != null)
                     query = query.Where(x => x.ApplicationUserId == CustomerId).Include(x => x.Product);
 
-
                 query = query.OrderByDescending(x => x.Id);
 
                 return query;
             });
+        }
+        public async Task DeleteShoppingCartRangeAsync(IEnumerable<ShoppingCart> shoppingCarts)
+        {
+         await   _ShoppingCartRepository.RemoveRangeAsync(shoppingCarts);
         }
 
         #endregion

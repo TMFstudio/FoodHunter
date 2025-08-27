@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace FoodHunter.Admin.Categories
 {
-    [Authorize]
+    [Authorize(Roles = "admin,owner")]
     public class IndexModel : PageModel
     {
         private readonly ICategoryService _categoryService;

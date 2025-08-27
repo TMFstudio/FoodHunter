@@ -21,7 +21,7 @@ namespace Service.Services
 
         public async Task DeleteProductCategoryByIdAsync(int id)
         {
-            var entity = await _ProductCategoryRepository.GetByIdAsync(id);
+            var entity = await _ProductCategoryRepository.GetByIdAsync(id: id);
             if (entity != null)
             {
                 await _ProductCategoryRepository.RemoveAsync(entity);
@@ -61,7 +61,7 @@ namespace Service.Services
 
         public virtual async Task<ProductCategory> GetProductCategoryAsync(int id)
         {
-            return await _ProductCategoryRepository.GetByIdAsync(id);
+            return await _ProductCategoryRepository.GetByIdAsync(id: id);
         }
 
 

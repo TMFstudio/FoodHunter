@@ -18,14 +18,11 @@ namespace Data.Repository
         }
         public virtual async Task InsertAsync(TEntity entity)
         {
-
                 if (entity == null)
                     throw new ArgumentNullException("entity null exception");
-
                await this.Entities.AddAsync(entity);
 
                await _db.SaveChangesAsync();
-
         }
         public virtual async Task<IPagedList<TEntity>> GetAllPagedAsync(Func<IQueryable<TEntity>, Task<IQueryable<TEntity>>> func = null,
        int pageIndex = 0, int pageSize = int.MaxValue, bool getOnlyTotalCount = false)
@@ -43,11 +40,8 @@ namespace Data.Repository
             return await query.ToListAsync();
         }
 
-        public virtual async Task<TEntity> GetByIdAsync(int? id,Expression<Func<TEntity,bool>>? filter = null)
+        public virtual async Task<TEntity> GetByIdAsync(Expression<Func<TEntity, bool>>? filter = null,int ? id=0)
         {
-            if (!id.HasValue || id == 0)
-                return null;
-
             IQueryable<TEntity> query = this.Entities;
             if (filter != null)
                 query = query.Where(filter);
@@ -57,7 +51,6 @@ namespace Data.Repository
         
         public virtual async Task<IEnumerable<TEntity>> GetAllsAsync(Expression<Func<TEntity,bool>>? filter = null, Func<IQueryable<TEntity>, Task<IQueryable<TEntity>>> func = null)
         {
-
             IQueryable<TEntity> query = Table;
             
             query = func != null ? await func(query) : query;
@@ -99,6 +92,19 @@ namespace Data.Repository
 
             await _db.SaveChangesAsync();
         }
+
+        public async Task<TEntity> AddAsync(TEntity entity)
+        {
+            if (entity == null)
+                throw new ArgumentNullException("entity null exception");
+
+            await this.Entities.AddAsync(entity);
+
+            await _db.SaveChangesAsync();
+
+            return entity;
+        }
+
         protected virtual DbSet<TEntity> Entities
         {
             get

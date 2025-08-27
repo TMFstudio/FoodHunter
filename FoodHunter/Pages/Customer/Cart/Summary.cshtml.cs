@@ -1,3 +1,5 @@
+using Core.Models;
+using FoodHunter.Helpers;
 using FoodHunter.Mapper;
 using FoodHunter.Model;
 using Microsoft.AspNetCore.Authorization;
@@ -34,9 +36,9 @@ namespace FoodHunter.Pages.Customer.Cart
             var claim = claimIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
             var cartItem = await _shoppingCartService.GetAllShoppingCartsProductAsync(claim.Value);
-            var customer =await _customerService.GetCustomerById(claim.Value);
+            var customer = await _customerService.GetCustomerById(claim.Value);
             OrderModel.PickUpName = customer.FirstName + "" + customer.LastName;
-            OrderModel.PhoneNumber = customer.PhoneNumber ;
+            OrderModel.PhoneNumber = customer.PhoneNumber;
             if (cartItem != null)
             {
                 ShoppingCartModel.CartItems = cartItem.Select(x => x.ToModel()).ToList();
@@ -64,14 +66,54 @@ namespace FoodHunter.Pages.Customer.Cart
                 }
             }
         }
+
         public async Task<IActionResult> OnGet()
         {
-          await  PrepareShoppingCart();
+            await PrepareShoppingCart();
             return Page();
-  
+
         }
-        public void OnPost()
+        public async Task<IActionResult> OnPost()
         {
+            var claimIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            if (claim != null)
+            {
+                var cartItem = await _shoppingCartService.GetAllShoppingCartsProductAsync(claim.Value);
+
+                OrderModel.Status = StaticData.StatusPending;
+                OrderModel.OrderDate = DateTime.Now;
+                OrderModel.CustomerId = claim.Value;
+                OrderModel.OrderTotal = 0;
+                ShoppingCartModel.ItemCount = 0;
+                foreach (var item in cartItem)
+                {
+                    OrderModel.OrderTotal += item.Product.Price * item.Count;
+                    OrderModel.Count += item.Count;
+
+                }
+                var entity = OrderModel.ToEntity();
+
+                var order=   await _orderService.AddOrderAsync(entity);
+
+                if (order != null)
+                {
+                    var orderItem = new OrderItemModel();
+                    foreach (var item in cartItem)
+                    {
+                        orderItem.Id = item.Id;
+                        orderItem.OrderID = order.Id;
+                        orderItem.Price = item.Product.Price;
+                        orderItem.Name = item.Product.Name;
+                        orderItem.ProductId = item.ProductId;
+                        orderItem.Count = item.Count;
+                        var orderItemEntity = orderItem.ToEntity();
+                        await _orderService.InsertOrderItemAsync(orderItemEntity);
+                    }
+                    await _shoppingCartService.DeleteShoppingCartRangeAsync(cartItem);
+                }
+            }
+            return Page();
         }
     }
 }

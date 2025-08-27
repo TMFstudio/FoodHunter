@@ -9,7 +9,7 @@ using Service.Services;
 namespace FoodHunter.Pages.Admin.ProductsCategories
 {
     [BindProperties]
-    [Authorize]
+    [Authorize(Roles = "admin,owner")]
     public class IndexModel : PageModel
     {
         private readonly IProductsCategoriesService  _productsCategoriesService;

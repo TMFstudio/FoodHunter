@@ -29,7 +29,7 @@ namespace FoodHunter.Pages.Home
             var claimIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimIdentity.FindFirst(ClaimTypes.NameIdentifier);
             var product = await _productService.GetProductByIdAsync(productId);
-            var cartItem = await _shoppingCartService.GetShoppingCartByIdAsync(product.Id, claim.Value);
+            var cartItem = await _shoppingCartService.GetShoppingCartByIdAsync(claim.Value, product.Id );
        
             if(cartItem !=null)
                 ShoppingCartModel.ItemsCount = cartItem.Count;
@@ -66,7 +66,7 @@ namespace FoodHunter.Pages.Home
             {
                 PrepareShoppingCartItemViewModel(id);
                 var entity = ShoppingCartModel.ToEntity();
-                var shoppingCartItem = await _shoppingCartService.GetShoppingCartByIdAsync(entity.ProductId,entity.ApplicationUserId);
+                var shoppingCartItem = await _shoppingCartService.GetShoppingCartByIdAsync(entity.ApplicationUserId, entity.ProductId);
                 if (shoppingCartItem == null)
                 {
                     await _shoppingCartService.InsertShoppingCartAsync(entity);

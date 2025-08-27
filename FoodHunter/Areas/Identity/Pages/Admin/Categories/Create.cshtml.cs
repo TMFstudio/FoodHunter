@@ -10,7 +10,7 @@ namespace FoodHunter.Admin.Categories
 {
 
     [BindProperties]
-    [Authorize]
+    [Authorize(Roles = "admin,owner")]
     public class CreateModel : PageModel
     {
         private readonly ICategoryService _categoryService;

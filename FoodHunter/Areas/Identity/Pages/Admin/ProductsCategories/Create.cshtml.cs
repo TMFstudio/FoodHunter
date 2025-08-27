@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace FoodHunter.Pages.Admin.ProductsCategories
 {
     [BindProperties]
-    [Authorize]
+    [Authorize(Roles = "admin,owner")]
     public class CreateModel : PageModel
     {
         private readonly IProductsCategoriesService _productsCategoriesService;

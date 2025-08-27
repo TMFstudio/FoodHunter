@@ -60,7 +60,7 @@ namespace FoodHunter.Pages.Customer.Cart
         {
             var claimIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimIdentity.FindFirst(ClaimTypes.NameIdentifier);
-            return await _shoppingCartService.GetShoppingCartByIdAsync(pid, claim.Value);
+            return await _shoppingCartService.GetShoppingCartByIdAsync(claim.Value, pid);
 
         }
         public async Task<IActionResult> OnGetAsync()

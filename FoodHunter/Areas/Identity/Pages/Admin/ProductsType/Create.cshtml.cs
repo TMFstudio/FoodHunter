@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace FoodHunter.Pages.Admin.ProductsType
 {
     [BindProperties]
-    [Authorize]
+    [Authorize(Roles = "admin,owner")]
     public class CreateModel : PageModel
     {
         private readonly IProductTypeService  _productTypeService;

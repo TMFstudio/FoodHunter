@@ -7,7 +7,7 @@ namespace FoodHunter.Model
         public int Count { get; set; }
         public string? Address { get; set; }
         public string? CustomerId { get; set; }
-        public string? status { get; set; }
+        public string? Status { get; set; }
 
         public DateTime OrderDate { get; set; }
         public DateTime PickUpTime { get; set; }
@@ -15,5 +15,7 @@ namespace FoodHunter.Model
         public string? TransactionId { get; set; }
         public string? PhoneNumber { get; set; }
         public string? PickUpName { get; set; }
+        public string? CustomerName { get; set; }
+
     }
 }

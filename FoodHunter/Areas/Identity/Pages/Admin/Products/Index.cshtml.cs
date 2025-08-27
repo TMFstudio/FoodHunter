@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace FoodHunter.Pages.Admin.Products
 {
-    [Authorize]
+    [Authorize(Roles = "admin,owner")]
     public class IndexModel : PageModel
     {
         private readonly IProductService _productService;

@@ -11,7 +11,7 @@ namespace Core.Models
         [Required]
         public string? Address { get; set; }
         public string? CustomerId { get; set; }
-        public string? status { get; set; }
+        public string? Status { get; set; }
         [ForeignKey("ApplicationUserId")]
         public ApplicationUser Customer { get; set; }
 

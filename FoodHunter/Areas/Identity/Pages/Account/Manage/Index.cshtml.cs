@@ -10,6 +10,7 @@ using Core.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FoodHunter.Areas.Identity.Pages.Account.Manage
 {
@@ -59,18 +60,26 @@ namespace FoodHunter.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
         }
 
-        private async Task LoadAsync(ApplicationUser user)
+        private async Task LoadAsync(ApplicationUser userModel)
         {
-            var userName = await _userManager.GetUserNameAsync(user);
+            var userName = await _userManager.GetUserNameAsync(userModel);
+            var user = await _userManager.GetUserAsync(User);
+
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
             Username = userName;
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                FirstName = user.LastName != null ? user.LastName : "",
+                LastName = user.LastName != null ? user.LastName : ""
             };
         }
 
@@ -89,6 +98,8 @@ namespace FoodHunter.Areas.Identity.Pages.Account.Manage
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);
+            user.FirstName = Input.FirstName;
+            user.LastName = Input.LastName;
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -110,6 +121,16 @@ namespace FoodHunter.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
+            if (!ModelState.IsValid)
+            {
+                if (Input.FirstName != null)
+                    user.FirstName = Input.FirstName;
+                if (Input.LastName != null)
+                    user.LastName = Input.LastName;
+
+                await _userManager.UpdateAsync(user);
+            }
+
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

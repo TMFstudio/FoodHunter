@@ -181,9 +181,9 @@ namespace FoodHunter.Mapper
             };
         }
 
-        public static IEnumerable<ShoppingCartItemModel> ToModelList(this IEnumerable<ShoppingCart> productTypes)
+        public static IEnumerable<ShoppingCartItemModel> ToModelList(this IEnumerable<ShoppingCart> shoppingCarts)
         {
-            return productTypes.Select(x => x.ToModel()).ToList();
+            return shoppingCarts.Select(x => x.ToModel()).ToList();
         }
         public static ShoppingCart ToEntity(this ShoppingCartItemModel shoppingCart)
         {
@@ -194,6 +194,78 @@ namespace FoodHunter.Mapper
                 ProductId = shoppingCart.ProductId.Value,
                 CreateOn=shoppingCart.CreateOn,
                 Count = shoppingCart.ItemsCount
+            };
+        }
+
+        #endregion
+
+        #region Order
+        public static OrderModel ToModel(this Order  order)
+        {
+            return new OrderModel
+            {Id=order.Id,
+                CustomerId = order.CustomerId,
+                 Count = order.Count,
+                 Address= order.Address,
+                OrderDate = order.OrderDate,
+                PhoneNumber = order.PhoneNumber,             
+                OrderTotal = order.OrderTotal,             
+                PickUpName = order.PickUpName,             
+                Status = order.Status,             
+                PickUpTime = order.PickUpTime,             
+                TransactionId = order.TransactionId            
+            };
+        }
+
+        public static IEnumerable<OrderModel> ToModelList(this IEnumerable<Order> orders)
+        {
+            return orders.Select(x => x.ToModel()).ToList();
+        }
+        public static Order ToEntity(this OrderModel order)
+        {
+            return new Order
+            {
+                CustomerId = order.CustomerId,
+                Count = order.Count,
+                Address = order.Address,
+                OrderDate = order.OrderDate,
+                PhoneNumber = order.PhoneNumber,
+                OrderTotal = order.OrderTotal,
+                PickUpName = order.PickUpName,
+                Status = order.Status,
+                PickUpTime = order.PickUpTime,
+                TransactionId = order.TransactionId
+            };
+        }
+
+        #endregion
+
+        #region OrderItems
+        public static OrderItemModel ToModel(this OrderItem  orderItem)
+        {
+            return new OrderItemModel
+            {
+                Id = orderItem.Id,
+                Count = orderItem.Count,
+                Name = orderItem.Name,
+                OrderID = orderItem.OrderID,
+                Price = orderItem.Price,
+                ProductId = orderItem.ProductId
+            };
+        }
+        public static IEnumerable<OrderItemModel> ToModelList(this IEnumerable<OrderItem> orderItems)
+        {
+            return orderItems.Select(x => x.ToModel()).ToList();
+        }
+        public static OrderItem ToEntity(this OrderItemModel orderItem)
+        {
+            return new OrderItem
+            {
+                Count = orderItem.Count,
+                Name = orderItem.Name,
+                OrderID = orderItem.OrderID,
+                Price = orderItem.Price.Value,
+                ProductId = orderItem.ProductId
             };
         }
 

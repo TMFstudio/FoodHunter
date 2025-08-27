@@ -1,0 +1,114 @@
+﻿@page
+@model FoodHunter.Pages.Admin.Orders.Index1Model
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-dark">Order List</h2>
+        </div>
+    </div>
+
+</div>
+<br />
+<br />
+<div class="table col-md-12">
+<table class="table table-bordered table-striped" style="width:100%">
+
+    <thead>
+        <tr>
+            <th>
+                Order Id
+            </th>
+            <th>
+                Customer Name
+            </th>
+            <th>
+                Customer Number
+            </th>
+            <th>
+                Order Total
+            </th>
+            <th>
+                Order Status
+            </th>
+            <th>
+                PickUp Time
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrdersModel.Orders)
+        {
+            <tr>
+                <td width="5%">
+                    @item.Id
+                </td>
+                <td width="15%">
+                    @item.CustomerName
+                </td>
+                <td width="15%">
+                    @item.PhoneNumber
+                </td>
+                <td width="15%">
+                    @item.OrderTotal $
+                </td>
+                <td width="15%">
+                    @item.Status
+                </td>
+                <td width="15%">
+                    @item.PickUpTime
+                </td>
+                <td width="10%">
+                    <a asp-page="Detail" Asp-route-id="@item.Id" class="btn btn-primary mx-2">
+                        <i class="bi bi-pencil-square"></i> detail
+                    </a>
+           </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+</div>
+<div id="indexer">
+    <ul class="pagination">
+        @if (Model.OrdersModel.HasPreviousPage)
+        {
+            <li class="page-item">
+
+                <a class="page-link" asp-page="Index" asp-route-pageIndex="@(Model.OrdersModel.CurrentPage - 1)">&laquo;</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item disabled">
+                <a class="page-link" href="#">&laquo;</a>
+            </li>
+        }
+        @for (int i = 1; i <= Model.OrdersModel.TotalPage; i++)
+        {
+            <li class="page-item @(i == Model.OrdersModel.PageIndex +1 ? "active" : "")">
+                <a class="page-link" asp-page="Index" asp-route-pageIndex="@i">@i </a>
+            </li>
+        }
+        @if (Model.OrdersModel.HasNextPage)
+        {
+            <li class="page-item">
+
+                <a class="page-link" asp-page="Index" asp-route-pageIndex="@(Model.OrdersModel.CurrentPage==0?Model.OrdersModel.CurrentPage +2 :Model.OrdersModel.CurrentPage + 1)">&raquo;</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item disabled">
+                <a class="page-link" href="#">&raquo;</a>
+            </li>
+        }
+    </ul>
+</div>

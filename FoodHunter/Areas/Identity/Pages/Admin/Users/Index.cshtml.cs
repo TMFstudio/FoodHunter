@@ -10,7 +10,7 @@ using Service.Interfaces;
 
 namespace FoodHunter.Areas.Identity.Pages.Admin.Users
 {
-    [Authorize]
+    [Authorize(Roles = "admin,owner")]
     public class IndexModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;

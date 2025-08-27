@@ -8,7 +8,7 @@ using Core.Models;
 
 namespace FoodHunter.Pages.Admin.ProductsType
 {
-    [Authorize]
+    [Authorize(Roles = "admin,owner")]
     public class IndexModel : PageModel
     {
         private readonly IProductTypeService _productTypeService;

@@ -23,7 +23,7 @@ namespace Service.Services
 
         public virtual async Task DeleteProductByIdAsync(int id)
         {
-            var entity = await _productRepository.GetByIdAsync(id);
+            var entity = await _productRepository.GetByIdAsync(id:id);
             if (entity != null)
             {
                 await _productRepository.RemoveAsync(entity);
