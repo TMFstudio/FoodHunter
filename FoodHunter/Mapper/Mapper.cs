@@ -132,7 +132,7 @@ namespace FoodHunter.Mapper
         {
             return new CustomerModel
             {
-                Id = customer.Id,
+                CustomerId = customer.CustomerId,
                 FirstName = customer.FirstName,
                 LastName = customer.LastName,
                 //not create mabe later !!!!
@@ -153,7 +153,7 @@ namespace FoodHunter.Mapper
         {
             return new Customer
             {
-                Id = customer.Id,
+                CustomerId = customer.CustomerId,
                 FirstName = customer.FirstName,
                 LastName = customer.LastName,
                 //not create mabe later !!!!
@@ -203,7 +203,7 @@ namespace FoodHunter.Mapper
         public static OrderModel ToModel(this Order  order)
         {
             return new OrderModel
-            {Id=order.Id,
+            {    Id=order.Id,
                 CustomerId = order.CustomerId,
                  Count = order.Count,
                  Address= order.Address,
@@ -212,7 +212,7 @@ namespace FoodHunter.Mapper
                 OrderTotal = order.OrderTotal,             
                 PickUpName = order.PickUpName,             
                 Status = order.Status,             
-                PickUpTime = order.PickUpTime,             
+                PickUpTime = order.PickUpTime,       
                 TransactionId = order.TransactionId            
             };
         }
@@ -248,7 +248,7 @@ namespace FoodHunter.Mapper
                 Id = orderItem.Id,
                 Count = orderItem.Count,
                 Name = orderItem.Name,
-                OrderID = orderItem.OrderID,
+                OrderID = orderItem.OrderId,
                 Price = orderItem.Price,
                 ProductId = orderItem.ProductId
             };
@@ -263,7 +263,7 @@ namespace FoodHunter.Mapper
             {
                 Count = orderItem.Count,
                 Name = orderItem.Name,
-                OrderID = orderItem.OrderID,
+                OrderId = orderItem.OrderID,
                 Price = orderItem.Price.Value,
                 ProductId = orderItem.ProductId
             };

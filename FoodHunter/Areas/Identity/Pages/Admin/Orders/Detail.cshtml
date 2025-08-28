@@ -1,0 +1,68 @@
+﻿@page
+@model FoodHunter.Areas.Admin.Orders.DetailModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <h2 class="text-center mb-4">🧾 ORDER DETAILS</h2>
+
+    <div class="row g-4">
+        <!-- Customer Info -->
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">Customer Information</div>
+                <div class="card-body">
+                    <p><strong>Name :</strong> @Model.OrderDetail.CustomerName</p>
+                    <p><strong>Email :</strong> @Model.OrderDetail.Email</p>
+                    <p><strong>Phone Number :</strong> @Model.OrderDetail.PhoneNumber</p>
+                    <p><strong>Order Total :</strong> @Model.OrderDetail.Order.OrderTotal</p>
+                    <p><strong>Order Date :</strong> @Model.OrderDetail.Order.OrderDate</p>
+                    <p><strong>Order PickUpTime :</strong> @Model.OrderDetail.Order.PickUpTime</p>
+                    <p><strong>Order Address :</strong> @Model.OrderDetail.Order.Address</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Items -->
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">Order @Model.OrderDetail.Order.Id</div>
+                <div class="card-body">
+                    <ul class="list-group mb-3">
+                        @foreach(var item in Model.OrderDetail.OrderItems)
+                        {
+                            <li class="list-group-item d-flex justify-content-between">
+                                @{var total = item.Count * item.Price; }
+                                <span>@item.Name (x @item.Count)</span>
+                                <span>$@total</span>
+                            </li>
+                        }
+                    </ul>
+                    <div class="text-end fw-bold">Total (USD): $@Model.OrderDetail.Order.OrderTotal</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="text-center mt-4">
+        <!-- StatusPending = 0,
+        StatusSubmitte = 1,
+        StatusRejected = 2,
+        StatusRefounded = 3,
+        StatusInProcess = 4,
+        StatusCompeleted = 5
+        -->
+        <button asp-page-handler="status" asp-route-orderId="@Model.OrderDetail.Order.Id" type="submit" class="btn btn-primary me-2">
+            <input hidden value="2" />❌ CANCEL ORDER
+        </button>
+        <button asp-page-handler="status" asp-route-orderId="@Model.OrderDetail.Order.Id" type="submit" class="btn btn-dark me-2">
+            <input hidden value="3" />✅ CONFIRM PICKUP
+        </button>
+        <button asp-page-handler="status" asp-route-orderId="@Model.OrderDetail.Order.Id" type="submit" class="btn btn-warning">
+            <input hidden value="3" />💸 REFUND ORDER
+        </button>
+    </div>
+</div>

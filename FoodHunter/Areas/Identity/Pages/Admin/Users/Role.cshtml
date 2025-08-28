@@ -1,0 +1,51 @@
+﻿@page
+@model FoodHunter.Areas.Identity.Pages.Admin.Users.RoleModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<div class="container py-5">
+    <h2 class="text-center mb-4">👤 Customer Role Assignment</h2>
+
+    <!-- Role Assignment Table -->
+    <div class="table-responsive">
+        <table class="table table-bordered ">
+            <thead class="table-dark">
+                <tr>
+                    <th>PhoneNumber</th>
+                    <th>Customer Name</th>
+                    <th>CurrentRole</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <form method="post">
+                <!-- Sample Row -->
+                <tr>
+                    <td>@Model.CustomerRole.Customer.PhoneNumber</td>
+                    <td>@Model.CustomerRole.Customer.FirstName @Model.CustomerRole.Customer.LastName</td>
+                        <td>@foreach (var item in @Model.CustomerRole.CurrentRole)
+                            {
+                             <span class="badge bg-secondary">@item.Value</span>
+                            }
+                    </td>
+                    <td>
+                        <select asp-for="CustomerRole.RoleName" class="form-control" asp-items="@Model.CustomerRole.Roles">
+                            <option disabled selected> Select Roles </option>
+                        </select>
+                    </td>
+                    <td>
+                        <button type="submit" class="btn btn-sm btn-outline-primary">
+                            🔄 Update
+                        </button>
+                        <button asp-page-handler="Delete" type="submit" asp-route-id="@Model.CustomerRole.Customer.CustomerId" class="btn btn-sm btn-outline-danger">
+                            <i class="fas fa-trash"></i> Delete Role
+                        </button>
+                    </td>
+                </tr>
+                <!-- Add more rows dynamically -->
+                </form>
+            </tbody>
+        </table>
+    </div>
+</div>

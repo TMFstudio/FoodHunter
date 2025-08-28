@@ -155,10 +155,10 @@ namespace Data.Migrations
                     b.Property<DateTime>("PickUpTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("TransactionId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("Status")
+                        .HasColumnType("int");
 
-                    b.Property<string>("status")
+                    b.Property<string>("TransactionId")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -183,7 +183,7 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OrderID")
+                    b.Property<int>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<double>("Price")
@@ -194,7 +194,7 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderID");
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("ProductId");
 
@@ -455,7 +455,7 @@ namespace Data.Migrations
                 {
                     b.HasOne("Core.Models.Order", "Order")
                         .WithMany()
-                        .HasForeignKey("OrderID")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -31,6 +31,6 @@ namespace FoodHunter.Areas.Identity.Pages.Admin.Users
                 return m;
             }).ToList();
             return Page();
-        }
+        }  
     }
 }

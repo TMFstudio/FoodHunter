@@ -1,4 +1,6 @@
-﻿namespace FoodHunter.Model
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace FoodHunter.Model
 {
     public record CustomerListModel:BasePageModel
     {

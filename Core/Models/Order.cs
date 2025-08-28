@@ -1,4 +1,5 @@
 ﻿using Data;
+using FoodHunter.Model;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -11,7 +12,7 @@ namespace Core.Models
         [Required]
         public string? Address { get; set; }
         public string? CustomerId { get; set; }
-        public string? Status { get; set; }
+        public OrderStatus? Status { get; set; }
         [ForeignKey("ApplicationUserId")]
         public ApplicationUser Customer { get; set; }
 

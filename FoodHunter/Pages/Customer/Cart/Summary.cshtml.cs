@@ -81,7 +81,7 @@ namespace FoodHunter.Pages.Customer.Cart
             {
                 var cartItem = await _shoppingCartService.GetAllShoppingCartsProductAsync(claim.Value);
 
-                OrderModel.Status = StaticData.StatusPending;
+                OrderModel.Status = OrderStatus.StatusPending;
                 OrderModel.OrderDate = DateTime.Now;
                 OrderModel.CustomerId = claim.Value;
                 OrderModel.OrderTotal = 0;

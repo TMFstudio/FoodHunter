@@ -9,7 +9,7 @@ namespace Service.Interfaces
     {
         Task<IPagedList<Customer>> GetUsersAsync(int pageIndex = 0, int pageSize = int.MaxValue);
         Task<ApplicationUser> GetCustomerById(string id);
-
+        Task AddRoleAsync(RoleManager<IdentityRole> roleManager, string roleName);
         //Task<(IdentityResult Result, Guid? UserId)> CreateAsync(UserCreateViewModel model);
         //Task<UserEditViewModel?> GetForEditAsync(Guid id);
         //Task<IdentityResult> UpdateAsync(UserEditViewModel model);

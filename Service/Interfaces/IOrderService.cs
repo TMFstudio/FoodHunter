@@ -6,14 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq.Expressions;
+using FoodHunter.Model;
 
 namespace Service.Interfaces
 {
     public interface IOrderService
     {
         Task<IPagedList<Order>> GetAllOrderAsync(int pageIndex = 0, int pageSize = int.MaxValue);
-        Task<IPagedList<OrderItem>> GetAllOrderItemsAsync(int pageIndex = 0, int pageSize = int.MaxValue);
+        Task<IPagedList<OrderItem>> GetAllOrderItemsAsync(int pageIndex = 0, int pageSize = int.MaxValue,int? orderId = 0, int? productId = 0);
         Task<Order> GetOrderByIdAsync(int id);
+        Task ChangeOrderStatusIdAsync(int orderId, OrderStatus orderStatus);
         Task<Order> AddOrderAsync(Order order);
         Task<Order> GetOrderByIdAsync(Expression<Func<Order, bool>> filter);
         Task DeleteOrderByIdAsync(int id);

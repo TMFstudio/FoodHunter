@@ -10,6 +10,7 @@ namespace Core.Models
 {
     public class Customer :BaseEntity
     {
+        public string CustomerId { get; init; }
         public string Email { get; init; } = string.Empty;
         public string UserName { get; init; } = string.Empty;
         public string? FirstName { get; init; }

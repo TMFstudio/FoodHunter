@@ -1,12 +1,10 @@
-﻿using Data;
-
+﻿
 namespace FoodHunter.Model
 {
-    public record CustomerModel :BaseModel
+    public record CustomerModel 
     {
-        public CustomerModel()
-        { 
-        }
+
+        public string CustomerId { get; init; }
         public string Email { get; init; } = string.Empty;
         public string UserName { get; init; } = string.Empty;
         public string? FirstName { get; init; }

@@ -4,12 +4,10 @@
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
+<br />
+<h1>Customers List</h1>
+    <br/>
 
-<h1>Index</h1>
-
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
 <table class="table table-bordered table-striped" style="width:100%">
 
     <thead>
@@ -51,11 +49,9 @@
                     @item.PhoneNumber
                 </td>
                 <td width="20%">
-@*                     <a asp-page="Update" Asp-route-id="@item.Id" class="btn btn-primary mx-2">
- *@                        <i class="bi bi-pencil-square"></i>
-         @*            </a> *@
-@*                     <partial name="_DeleteModal" model="item" />
- *@
+                    <a asp-page="Role" Asp-route-id="@item.CustomerId" class="btn btn-primary mx-2">
+                        <i class="bi bi-pencil-square"></i> Role Management
+                      </a> 
                 </td>
             </tr>
         }

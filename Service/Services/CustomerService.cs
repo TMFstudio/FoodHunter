@@ -36,7 +36,7 @@ namespace Service.Services
                 var total = await u.CountAsync();
 
                 var items = u.Select(u => new Customer
-                {
+                {CustomerId=u.Id,
                     Email = u.Email!,
                     UserName = u.UserName!,
                     FirstName = u.FirstName,
@@ -54,9 +54,18 @@ namespace Service.Services
         {
           return await  _userManager.Users.FirstOrDefaultAsync(x => x.Id == id);
 
-          
         }
-    
+        public async Task AddRoleAsync(RoleManager<IdentityRole> roleManager, string roleName)
+        {
+            if (!await roleManager.RoleExistsAsync(roleName))
+            {
+                var result = await roleManager.CreateAsync(new IdentityRole(roleName));
+                if (!result.Succeeded)
+                {
+                    throw new Exception($"Failed to create role '{roleName}': {string.Join(", ", result.Errors.Select(x => x.Description))}");
+                }
+            }
+        }
         //// Loads user data for the Edit form (read-only).
         //public async Task<UserEditViewModel?> GetForEditAsync(Guid id)
         //{

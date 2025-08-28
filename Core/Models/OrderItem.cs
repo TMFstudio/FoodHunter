@@ -12,8 +12,8 @@ namespace Core.Models
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]
         public Product Product { get; set; }
-        public int OrderID { get; set; }
-        [ForeignKey("OrderID")]
+        public int OrderId { get; set; }
+        [ForeignKey("OrderId")]
         public Order Order { get; set; }
         public int Count { get; set; }
         [Required]

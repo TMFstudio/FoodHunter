@@ -1,6 +1,8 @@
 ﻿using Core;
 using Core.Models;
 using Data.Repository;
+using FoodHunter.Model;
+using Microsoft.EntityFrameworkCore;
 using Service.Interfaces;
 using System.Linq.Expressions;
 
@@ -35,16 +37,16 @@ namespace Service.Services
 
         public async Task<Order> GetOrderByIdAsync(int id)
         {
-            return await _orderRepository.GetByIdAsync(id:id);
+            return await _orderRepository.GetByIdAsync(id: id);
         }
 
         public async Task InsertOrderAsync(Order order)
         {
-          await _orderRepository.InsertAsync(order);
+            await _orderRepository.InsertAsync(order);
         }
         public async Task<Order> AddOrderAsync(Order order)
         {
-         return await _orderRepository.AddAsync(order);
+            return await _orderRepository.AddAsync(order);
         }
 
         public async Task UpdateOrderAsync(Order order)
@@ -52,22 +54,33 @@ namespace Service.Services
             await _orderRepository.UpdateAsync(order);
         }
 
-        public async Task<Order> GetOrderByIdAsync(Expression<Func<Order,bool>>filter )
+        public async Task<Order> GetOrderByIdAsync(Expression<Func<Order, bool>> filter)
         {
-            return await _orderRepository.GetByIdAsync(filter:filter);
+            return await _orderRepository.GetByIdAsync(filter: filter);
         }
         public async Task InsertOrderItemAsync(OrderItem orderItem)
         {
             await _orderItemRepository.InsertAsync(orderItem);
         }
-        public async Task<IPagedList<OrderItem>> GetAllOrderItemsAsync(int pageIndex = 0, int pageSize = int.MaxValue)
+        public async Task<IPagedList<OrderItem>> GetAllOrderItemsAsync(int pageIndex = 0, int pageSize = int.MaxValue, int? orderId = 0, int? productId = 0)
         {
             return await _orderItemRepository.GetAllPagedAsync(async query =>
             {
-                query = query.OrderByDescending(x => x.OrderID);
+                if (orderId != 0)
+                    query = query.Where(q => q.OrderId == orderId);
+
+                if (productId != 0)
+                    query = query.Where(q => q.ProductId == productId.Value);
+                query = query.OrderByDescending(x => x.OrderId);
                 return query;
             }, pageIndex, pageSize: pageSize);
         }
 
+        public async Task ChangeOrderStatusIdAsync(int orderId,OrderStatus orderStatus)
+        {
+            var query = await _orderRepository.GetByIdAsync(id: orderId);
+            query.Status = orderStatus;
+          await  _orderRepository.UpdateAsync(query);
+        }
     }
 }
