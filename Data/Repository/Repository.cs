@@ -34,10 +34,10 @@ namespace Data.Repository
             return await query.ToPagedListAsync(pageIndex, pageSize, getOnlyTotalCount);
         }
 
-        public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
+        public virtual async Task<IQueryable<TEntity>> GetAllAsync()
         {
             IQueryable<TEntity> query = this.Entities;
-            return await query.ToListAsync();
+            return  query;
         }
 
         public virtual async Task<TEntity> GetByIdAsync(Expression<Func<TEntity, bool>>? filter = null,int ? id=0)
@@ -49,7 +49,7 @@ namespace Data.Repository
            return await query.FirstOrDefaultAsync(x=>x.Id==id);
         }
         
-        public virtual async Task<IEnumerable<TEntity>> GetAllsAsync(Expression<Func<TEntity,bool>>? filter = null, Func<IQueryable<TEntity>, Task<IQueryable<TEntity>>> func = null)
+        public virtual async Task<IQueryable<TEntity>> GetAllsAsync(Expression<Func<TEntity,bool>>? filter = null, Func<IQueryable<TEntity>, Task<IQueryable<TEntity>>> func = null)
         {
             IQueryable<TEntity> query = Table;
             
@@ -58,7 +58,7 @@ namespace Data.Repository
             if (filter != null)
                 query = query.Where(filter);
 
-           return await query.ToListAsync();
+           return query;
         }
 
 

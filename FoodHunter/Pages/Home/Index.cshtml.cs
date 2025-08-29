@@ -3,9 +3,7 @@ using FoodHunter.Mapper;
 using FoodHunter.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Service.Interfaces;
-using Service.Services;
 
 namespace FoodHunter.Pages.Home
 {

@@ -26,13 +26,13 @@ namespace FoodHunter.Pages.Admin.Orders
             OrdersModel.Orders = order.Select( order =>
             {
                 var m = order.ToModel();
+                m.Status =(OrderStatus?)order.StatusId;
                 var customer = _customerService.GetCustomerById(order.CustomerId).Result;
                 m.CustomerName = customer.FirstName +" "+customer.LastName;
                 m.PhoneNumber= customer.PhoneNumber;
 
                 return m;
             }).ToList();
-
             OrdersModel.PageIndex = order.PageIndex;
             OrdersModel.CurrentPage = pageindex;
             OrdersModel.TotalPage = order.TotalPages;

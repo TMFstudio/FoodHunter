@@ -81,7 +81,7 @@ namespace FoodHunter.Pages.Customer.Cart
             {
                 var cartItem = await _shoppingCartService.GetAllShoppingCartsProductAsync(claim.Value);
 
-                OrderModel.Status = OrderStatus.StatusPending;
+                OrderModel.OrderStatusId = (int?)OrderStatus.StatusPending;
                 OrderModel.OrderDate = DateTime.Now;
                 OrderModel.CustomerId = claim.Value;
                 OrderModel.OrderTotal = 0;
@@ -113,7 +113,7 @@ namespace FoodHunter.Pages.Customer.Cart
                     await _shoppingCartService.DeleteShoppingCartRangeAsync(cartItem);
                 }
             }
-            return Page();
+            return RedirectToPage("Index");
         }
     }
 }

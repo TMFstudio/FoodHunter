@@ -211,7 +211,7 @@ namespace FoodHunter.Mapper
                 PhoneNumber = order.PhoneNumber,             
                 OrderTotal = order.OrderTotal,             
                 PickUpName = order.PickUpName,             
-                Status = order.Status,             
+                OrderStatusId = order.StatusId,             
                 PickUpTime = order.PickUpTime,       
                 TransactionId = order.TransactionId            
             };
@@ -230,9 +230,9 @@ namespace FoodHunter.Mapper
                 Address = order.Address,
                 OrderDate = order.OrderDate,
                 PhoneNumber = order.PhoneNumber,
-                OrderTotal = order.OrderTotal,
+                OrderTotal = order.OrderTotal.Value,
                 PickUpName = order.PickUpName,
-                Status = order.Status,
+                StatusId = order.OrderStatusId,
                 PickUpTime = order.PickUpTime,
                 TransactionId = order.TransactionId
             };

@@ -36,10 +36,10 @@ namespace FoodHunter.Areas.Admin.Orders
 
             return Page(); 
         }
-        public async Task<IActionResult> OnStatusAsync(int orderId,OrderStatus orderStatus)
+        public async Task<IActionResult> OnPostAsync(int orderId,int? orderStatusId=0)
         {
-          await  _orderService.ChangeOrderStatusIdAsync(orderId,orderStatus);
-            return RedirectToPage();
+          await  _orderService.ChangeOrderStatusIdAsync(orderId, orderStatusId.Value);
+            return RedirectToPage(routeValues: new {orderId});
         }
     }
 }

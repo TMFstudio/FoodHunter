@@ -10,6 +10,8 @@ namespace Service.Interfaces
             int pageSize = int.MaxValue);
         Task<IEnumerable<Category>> GetAllCategoriesAsync();
         Task<IEnumerable<Product>> GetAllProductAsync();
+        Task<IPagedList<Product>> GetAllProductByCategoryIdAsync(int? catId = 0,
+          int pageIndex = 0, int pageSize = int.MaxValue);
         Task<ProductCategory> GetProductCategoryAsync(int id);
         Task DeleteProductCategoryByIdAsync(int id);
         Task InsertProductCategoryAsync(ProductCategory product);

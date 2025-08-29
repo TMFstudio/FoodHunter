@@ -1,4 +1,5 @@
 ﻿@page
+@using FoodHunter.Model
 @model FoodHunter.Areas.Admin.Orders.DetailModel
 @{
     ViewData["Title"] = "Index";
@@ -55,14 +56,17 @@
         StatusInProcess = 4,
         StatusCompeleted = 5
         -->
-        <button asp-page-handler="status" asp-route-orderId="@Model.OrderDetail.Order.Id" type="submit" class="btn btn-primary me-2">
-            <input hidden value="2" />❌ CANCEL ORDER
-        </button>
-        <button asp-page-handler="status" asp-route-orderId="@Model.OrderDetail.Order.Id" type="submit" class="btn btn-dark me-2">
-            <input hidden value="3" />✅ CONFIRM PICKUP
-        </button>
-        <button asp-page-handler="status" asp-route-orderId="@Model.OrderDetail.Order.Id" type="submit" class="btn btn-warning">
-            <input hidden value="3" />💸 REFUND ORDER
-        </button>
+       <form method="post">
+            <button asp-page-handler="Status" asp-route-orderId="@Model.OrderDetail.Order.Id" type="submit" class="btn btn-primary me-2">
+                ❌ CANCEL ORDER   <input type="hidden" name="orderStatusId" value="2" />
+            </button>
+            <button asp-page-handler="Status" asp-route-orderId="@Model.OrderDetail.Order.Id" type="submit" class="btn btn-dark me-2">
+                ✅ CONFIRM PICKUP  <input type="hidden" name="orderStatusId" value="4" />
+            </button>
+            <button asp-page-handler="Status" asp-route-orderId="@Model.OrderDetail.Order.Id" type="submit" class="btn btn-warning">
+                💸 REFUND ORDER  <input type="hidden" name="orderStatusId" value="3" />
+            </button>
+       </form>
+
     </div>
 </div>

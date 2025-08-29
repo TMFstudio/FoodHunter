@@ -1,8 +1,6 @@
 ﻿using Core;
 using Core.Models;
 using Data.Repository;
-using FoodHunter.Model;
-using Microsoft.EntityFrameworkCore;
 using Service.Interfaces;
 using System.Linq.Expressions;
 
@@ -76,10 +74,10 @@ namespace Service.Services
             }, pageIndex, pageSize: pageSize);
         }
 
-        public async Task ChangeOrderStatusIdAsync(int orderId,OrderStatus orderStatus)
+        public async Task ChangeOrderStatusIdAsync(int orderId,int orderStatusId)
         {
             var query = await _orderRepository.GetByIdAsync(id: orderId);
-            query.Status = orderStatus;
+            query.StatusId = orderStatusId;
           await  _orderRepository.UpdateAsync(query);
         }
     }

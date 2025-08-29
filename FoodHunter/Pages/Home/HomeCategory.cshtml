@@ -1,0 +1,63 @@
+﻿@page
+@model FoodHunter.Pages.Home.HomeCategoryModel
+@{
+}
+@if (Model.HompageModel.Categories != null)
+{
+    <section class="categories">
+        <div class="container">
+            <h2 class="section-title">Food Categories</h2>
+            <div class="categories-grid">
+                @if (Model.HompageModel.Categories != null)
+                {
+                    @foreach (var item in Model.HompageModel.Categories)
+                    {
+                        <div class="category-card">
+                            <a asp-page="HomeCategory" asp-route-categoryId="@item.Id" class="category-icon">
+                                <i class="fas fa-hamburger"></i>
+                            </a>
+                            <h3>@item.Name</h3>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </section>
+}
+@if (Model.HompageModel.Products != null)
+{
+    <!-- Featured Products -->
+    <section class="featured">
+        <div class="container">
+            <h2 class="section-title">@Model.HompageModel.CategoryName</h2>
+            <div class="products-grid">
+                @foreach (var item in Model.HompageModel.Products)
+                {
+                    <div class="product-card">
+                        <div class="product-badge">Bestseller</div>
+                        <div class="product-img">
+                            <img src="@item.Image" alt="Cheeseburger">
+                        </div>
+                        <div class="product-info">
+                            <h3>@item.Name</h3>
+                            <div class="product-meta">
+                                <span class="price">$@item.Price</span>
+                                <span class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                    (128)
+                                </span>
+                            </div>
+                            <a asp-page="ProductDetail" asp-route-id="@item.Id" class="btn btn-primary add-to-cart">
+                                <i class="fas fa-shopping-cart"></i> Add to Cart
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}

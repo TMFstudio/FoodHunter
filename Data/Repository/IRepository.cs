@@ -11,8 +11,8 @@ namespace Data.Repository
         Task UpdateAsync(TEntity entity);
         Task RemoveAsync(TEntity entity);
         Task RemoveRangeAsync(IEnumerable<TEntity> entity);
-        Task<IEnumerable<TEntity>> GetAllAsync();
-        Task<IEnumerable<TEntity>> GetAllsAsync(Expression<Func<TEntity, bool>>? filter = null, Func<IQueryable<TEntity>, Task<IQueryable<TEntity>>> func = null);
+        Task<IQueryable<TEntity>> GetAllAsync();
+        Task<IQueryable<TEntity>> GetAllsAsync(Expression<Func<TEntity, bool>>? filter = null, Func<IQueryable<TEntity>, Task<IQueryable<TEntity>>> func = null);
         Task<IPagedList<TEntity>> GetAllPagedAsync(Func<IQueryable<TEntity>, Task<IQueryable<TEntity>>> func = null,
        int pageIndex = 0, int pageSize = int.MaxValue, bool getOnlyTotalCount = false);
         Task<TEntity> GetByIdAsync(Expression<Func<TEntity, bool>>? filter = null, int? id=0);

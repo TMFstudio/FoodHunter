@@ -37,9 +37,22 @@ namespace Service.Services
         {
             return await _ProductRepository.GetAllAsync();
         }
+        public async Task<IPagedList<Product>> GetAllProductByCategoryIdAsync(int? catId = 0,
+          int pageIndex = 0, int pageSize = int.MaxValue)
+        {
 
-        public virtual async Task<IPagedList<ProductCategory>> GetAllProductsCategoriesAsync(int? productId=0,int? categoryId = 0,
-          int pageIndex = 0,   int pageSize = int.MaxValue)
+            var productCategories = await _ProductCategoryRepository.GetAllAsync();
+           var product = productCategories.Where(x => x.CategoryId == catId).AsQueryable().Include(x=>x.Product).Select(x=>x.Product);
+
+            return await _ProductRepository.GetAllPagedAsync(async query =>
+            {
+                query= product;
+                return  query;
+                },pageIndex,pageSize);
+           
+        }
+        public virtual async Task<IPagedList<ProductCategory>> GetAllProductsCategoriesAsync(int? productId = 0, int? categoryId = 0,
+          int pageIndex = 0, int pageSize = int.MaxValue)
         {
             return await _ProductCategoryRepository.GetAllPagedAsync(async query =>
             {
@@ -50,7 +63,7 @@ namespace Service.Services
                 //bring categories with categoryids
                 if (categoryId != 0)
                     query = query.Where(x => x.CategoryId == categoryId).Include(x => x.Product);
-          
+
                 query.OrderByDescending(x => x.Id);
 
                 return query;
@@ -76,8 +89,8 @@ namespace Service.Services
         }
         public virtual async Task<bool> CheckProductCategoryExistenceAsync(int categoryId, int productId)
         {
-            var query =  _ProductCategoryRepository.Table;
-            return await query.AnyAsync(x => x.CategoryId == categoryId && x.ProductId == productId); 
+            var query = _ProductCategoryRepository.Table;
+            return await query.AnyAsync(x => x.CategoryId == categoryId && x.ProductId == productId);
         }
     }
 }
