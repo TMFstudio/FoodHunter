@@ -23,7 +23,7 @@ namespace FoodHunter.Pages.Home
         protected virtual async Task PrepareHomeModel()
         {
             var categories = await _categoryService.GetAllCategoriesAsync();
-            var products = await _productService.GetAllProductsAsync();
+            var products = await _productService.GetAllProductsAsync(pageSize:12);
             var productTypes = await _productTypeService.GetAllProductTypesAsync();
 
             HompageModel.Categories = categories.Select(x=>x.ToModel()).ToList();

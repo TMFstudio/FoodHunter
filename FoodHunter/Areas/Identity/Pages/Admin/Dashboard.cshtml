@@ -1,5 +1,5 @@
 ﻿@page
-@model FoodHunter.Areas.Identity.Pages.Admin.Index1Model
+@model FoodHunter.Areas.Identity.Pages.Admin.IndexModel
 @{
     Layout = "/Areas/Identity/Pages/Admin/_AdminLayout.cshtml";
 }
@@ -95,40 +95,45 @@
 
             <!-- Stats Cards -->
             <div class="stats">
-                <div class="card stat-card">
-                    <h3>Today's Orders</h3>
-                    <div class="value">142</div>
-                    <div class="change">
-                        <i class="fas fa-arrow-up"></i>
-                        12% from yesterday
+                @if (Model.Dashboard.Orders != null)
+                {
+                    <div class="card stat-card">
+                        <h3>Todays Orders</h3>
+                        <div class="value">@Model.Dashboard.ToDayOrderCount</div>
+                        <div class="change">
+                            <i class="fas fa-arrow-up"></i>
+                            Active Customers
+                        </div>
                     </div>
-                </div>
 
-                <div class="card stat-card">
-                    <h3>Revenue</h3>
-                    <div class="value">$3,845</div>
-                    <div class="change">
-                        <i class="fas fa-arrow-up"></i>
-                        8% from yesterday
+                    <div class="card stat-card">
+                        <h3>Todays Sells</h3>
+                        <div class="value">$@Model.Dashboard.ToDayOrderTotal</div>
+                        <div class="change">
+                            <i class="fas fa-arrow-up"></i>
+                            todays sells
+                        </div>
                     </div>
-                </div>
 
-                <div class="card stat-card">
-                    <h3>Active Customers</h3>
-                    <div class="value">1,024</div>
-                    <div class="change">
-                        <i class="fas fa-arrow-up"></i>
-                        5% from yesterday
+                    <div class="card stat-card">
+                        <h3>Active Customers</h3>
+                        <div class="value">@Model.Dashboard.Customers.Count</div>
+                        <div class="change">
+                            <i class="fas fa-arrow-up"></i>
+                        </div>
                     </div>
-                </div>
 
-                <div class="card stat-card">
-                    <h3>Popular Items</h3>
-                    <div class="value">Pizza Margherita</div>
-                    <div class="change">
-                        48 orders today
+                    <div class="card stat-card">
+                        <h3>Menu Products</h3>
+                        <div class="value">@Model.Dashboard.Products.Count</div>
+                        <div class="change">
+                            48 orders today
+                        </div>
                     </div>
-                </div>
+                }
+
+
+
             </div>
 
             <!-- Recent Orders -->
@@ -145,88 +150,35 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>#ORD-7841</td>
-                            <td>John Smith</td>
-                            <td>3</td>
-                            <td>$42.50</td>
-                            <td><span class="status completed">Completed</span></td>
-                            <td>
-                                <div class="action-menu">
-                                    <button class="action-btn">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </button>
-                                    <div class="action-dropdown">
-                                        <a href="#">View Details</a>
-                                        <a href="#">Edit</a>
-                                        <a href="#">Cancel</a>
-                                        <a href="#">Print Invoice</a>
+                    @foreach (var item in Model.Dashboard.Orders)
+                    {
+
+       
+                        <tbody>
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.PickUpName</td>
+                                <td>@item.Count</td>
+                                <td>$@item.OrderTotal</td>
+                                <td><span class="status completed">@item.Status</span></td>
+       @*                          <td>
+                                    <div class="action-menu">
+                                        <button class="action-btn">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                        <div class="action-dropdown">
+                                            <a href="#">View Details</a>
+                                            <a href="#">Edit</a>
+                                            <a href="#">Cancel</a>
+                                            <a href="#">Print Invoice</a>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#ORD-7840</td>
-                            <td>Sarah Johnson</td>
-                            <td>2</td>
-                            <td>$28.75</td>
-                            <td><span class="status pending">Pending</span></td>
-                            <td>
-                                <div class="action-menu">
-                                    <button class="action-btn">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </button>
-                                    <div class="action-dropdown">
-                                        <a href="#">View Details</a>
-                                        <a href="#">Edit</a>
-                                        <a href="#">Cancel</a>
-                                        <a href="#">Print Invoice</a>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#ORD-7839</td>
-                            <td>Michael Brown</td>
-                            <td>5</td>
-                            <td>$65.20</td>
-                            <td><span class="status completed">Completed</span></td>
-                            <td>
-                                <div class="action-menu">
-                                    <button class="action-btn">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </button>
-                                    <div class="action-dropdown">
-                                        <a href="#">View Details</a>
-                                        <a href="#">Edit</a>
-                                        <a href="#">Cancel</a>
-                                        <a href="#">Print Invoice</a>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>#ORD-7838</td>
-                            <td>Emily Davis</td>
-                            <td>1</td>
-                            <td>$12.99</td>
-                            <td><span class="status cancelled">Cancelled</span></td>
-                            <td>
-                                <div class="action-menu">
-                                    <button class="action-btn">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </button>
-                                    <div class="action-dropdown">
-                                        <a href="#">View Details</a>
-                                        <a href="#">Edit</a>
-                                        <a href="#">Cancel</a>
-                                        <a href="#">Print Invoice</a>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
+                                </td> *@
+
+
+                            </tr>
+                        </tbody>
+                    }
                 </table>
             </div>
         </div>

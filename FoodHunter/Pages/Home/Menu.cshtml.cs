@@ -22,7 +22,7 @@ namespace FoodHunter.Pages.Home
         protected virtual async Task PrepareHomeModel()
         {
             var categories = await _categoryService.GetAllCategoriesAsync();
-            var products = await _productService.GetAllProductsAsync(pageSize:8);
+            var products = await _productService.GetAllProductsAsync(pageSize:50);
             var productTypes = await _productTypeService.GetAllProductTypesAsync();
             if (products != null)
                 MenuItemsModel.Products = products.Select(x => x.ToModel()).ToList();
